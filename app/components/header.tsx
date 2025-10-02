@@ -9,22 +9,23 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { LuChevronDown } from "react-icons/lu";
+import { IoIosMenu } from "react-icons/io";
 
 const Header = () => {
   return (
-    <Box bgColor={"#11312E"} w={"100%"} h={'15vh'} p={"1.5rem 4rem"}>
+    <Box bgColor={"#11312E"} w={"100%"} h={'15vh'} p={{mdDown : '2rem 1.5rem',mdTo2xl : "1rem 4rem"}} zIndex={200}>
       <HStack justify={"space-between"}>
-        <Flex gap={"2rem"} alignItems={'center'}>
-          <Box>
+        <Flex gap={{lgDown : '1rem',lgTo2xl : "2rem"}} alignItems={'center'}>
+          <Box zIndex={'2000'}>
             <Image src={`/logo.webp`} alt="" w={"10rem"} />
           </Box>
-          <Box display={"flex"} gap={"1.5rem"}>
-            <Text color={"white"} fontSize={'1.4rem'} display={'flex'} alignItems={'center'} gap={'.4rem'}>Suppliers <LuChevronDown /></Text>
-            <Text color={"white"} fontSize={'1.4rem'} display={'flex'} alignItems={'center'} gap={'.4rem'}>Buyers <LuChevronDown /></Text>
-            <Text color={"white"} fontSize={'1.4rem'} display={'flex'} alignItems={'center'} gap={'.4rem'}>Resources <LuChevronDown /></Text>
+          <Box zIndex={'2000'} display={{mdDown: 'none' ,mdTo2xl : "flex"}} gap={{lgDown : '.7rem', lgTo2xl :"1.5rem"}}>
+            <Text color={"white"} fontSize={{xlTo2xl :'1.4rem', mdToLg : '1rem'}} display={'flex'} alignItems={'center'} gap={'.4rem'}>Suppliers <LuChevronDown /></Text>
+            <Text color={"white"} fontSize={{xlTo2xl :'1.4rem', mdToLg : '1rem'}} display={'flex'} alignItems={'center'} gap={'.4rem'}>Buyers <LuChevronDown /></Text>
+            <Text color={"white"} fontSize={{xlTo2xl :'1.4rem', mdToLg : '1rem'}} display={'flex'} alignItems={'center'} gap={'.4rem'}>Resources <LuChevronDown /></Text>
           </Box>
         </Flex>
-        <Flex gap={"1rem"}>
+        <Flex display={{mdDown : 'none', mdTo2xl : 'flex'}} gap={"1rem"} zIndex={'1000'}>
           <Button
             bg={"white"}
             color={"black"}
@@ -43,6 +44,9 @@ const Header = () => {
           >
             Sign Up
           </Button>
+        </Flex>
+        <Flex display={{mdDown : 'flex', mdTo2xl : 'none'}} zIndex={'1000'}>
+          <IoIosMenu fill="white" size={'2rem'}/>
         </Flex>
       </HStack>
     </Box>
