@@ -12,10 +12,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaStar } from "react-icons/fa";
+import useStoreQuery from "./store";
 
 const Landing = () => {
   const users = [1, 2, 3, 4, 5];
   let [userImageId, setUserImageId] = useState(1);
+  const isOpen = useStoreQuery((s) => s.isOpen);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setUserImageId(userImageId < 6 ? userImageId + 1 : (userImageId = 1));
@@ -26,9 +29,9 @@ const Landing = () => {
     };
   }, [userImageId]);
   return (
-    <div>
+    <div className="cont">
       <Header />
-      <Box zIndex={"300"} h={"85vh"} bg={"#11312E"}>
+      <Box overflowX={'hidden'} w={'100vw'} zIndex={"300"} h={"85vh"} bg={"#11312E"}>
         <Stack
           zIndex={"2000"}
           w={{ mdDown: "75%", mdTo2xl: "60%" }}
@@ -46,7 +49,8 @@ const Landing = () => {
           <Text
             zIndex={"2000"}
             color={"#98A2B3"}
-            fontSize={{ smDown:'1rem', lgDown: "1.2rem", lgTo2xl: "1.3rem" }}
+            fontSize={{ smDown:'1rem', lgDown: "1.3rem", lgTo2xl: "1.3rem" }}
+            maxWidth={{mdDown: '30ch'}}
           >
             Trusted by the worlds best farms, grocers, and restaurants, Local
             Line is the leading e-commerce platform for buying & selling local
@@ -124,6 +128,19 @@ const Landing = () => {
           position={"absolute"}
           top={0}
           right={0}
+        ></Text>
+        <Text
+          zIndex={"3000"}
+          position={"absolute"}
+          h={"85vh"}
+          width={"100%"}
+          top={'15vh'}
+          bg={'red'}
+          right={'-100%'}
+          animationName={isOpen ? 'navOpen' : ''}
+          animationDuration={'.3s'}
+          animationFillMode={'forwards'}
+          animationTimingFunction={'linear'}
         ></Text>
       </Box>
     </div>

@@ -4,3 +4,14 @@
     box-sizing: border-box;
 }
 
+.cont{
+    width: 100vw;
+    position: relative;
+    overflow-x: hidden;
+}
+
+@keyframes navOpen {
+    100%{
+        right: 0;
+    }
+}
