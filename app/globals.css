@@ -4,10 +4,22 @@
     box-sizing: border-box;
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .cont{
     width: 100vw;
     position: relative;
     overflow-x: hidden;
+}
+
+.gen-cont{
+    width: 100vw;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes navOpen {
