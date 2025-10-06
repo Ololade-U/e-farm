@@ -13,9 +13,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import z from "zod";
+
+const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"]);
+const Role = z.enum(["BUYER", "FARMER"]);
 
 const schema = z.object({
   fullName: z.string().min(3, { message: "Enter your name" }),
@@ -24,17 +27,35 @@ const schema = z.object({
     .string()
     .min(7, { message: "Password must be at least 8 characters long" }),
   phoneNumber: z.string().min(10, { message: "Enter a valid phone number" }),
-  country: z.string().min(5),
+  country: Country,
+  role: Role,
 });
 
 type FormData = z.infer<typeof schema>;
 
 const ConsumerSignUp = () => {
+  const [success, setSuccess] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      role: "BUYER",
+    },
+  });
+
+  const onSubmit = async (data: FieldValues) => {
+    const response = await fetch("../api/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      setSuccess(true);
+      location.reload()
+    }
+  };
   return (
     <>
       <HStack h={"100vh"} gap={0}>
@@ -76,12 +97,9 @@ const ConsumerSignUp = () => {
             w={"70%"}
             p={"1rem 2rem"}
           >
-            <form
-              action=""
-              onSubmit={handleSubmit((data) => console.log(data))}
-            >
+            <form action="" onSubmit={handleSubmit(onSubmit)}>
               <Fieldset.Root size="lg" maxW="md">
-                <Stack mb={'.5rem'}>
+                <Stack mb={".5rem"}>
                   <Fieldset.Legend textAlign={"center"} fontSize={"2xl"}>
                     Create Account
                   </Fieldset.Legend>
@@ -90,6 +108,7 @@ const ConsumerSignUp = () => {
                 <Fieldset.Content>
                   <Field.Root>
                     <Field.Label>Full Name</Field.Label>
+                    <Input {...register("role")} name="role" type="hidden" />
                     <Input
                       {...register("fullName")}
                       name="fullName"
@@ -147,7 +166,7 @@ const ConsumerSignUp = () => {
 
                   <Field.Root mb={"2rem"}>
                     <Field.Label>Country</Field.Label>
-                    <NativeSelect.Root>
+                    <NativeSelect.Root {...register("country")}>
                       <NativeSelect.Field
                         name="country"
                         placeholder="Select Your Country"
@@ -155,11 +174,7 @@ const ConsumerSignUp = () => {
                       >
                         <For each={["Nigeria", "Ghana", "Cameroon", "Togo"]}>
                           {(item) => (
-                            <option
-                              {...register("country")}
-                              key={item}
-                              value={item}
-                            >
+                            <option key={item} value={item}>
                               {item}
                             </option>
                           )}
@@ -170,7 +185,12 @@ const ConsumerSignUp = () => {
                   </Field.Root>
                 </Fieldset.Content>
 
-                <Button type="submit" bg={'#09734E'} alignSelf="center" p={"0 5rem"}>
+                <Button
+                  type="submit"
+                  bg={"#09734E"}
+                  alignSelf="center"
+                  p={"0 5rem"}
+                >
                   Sign Up
                 </Button>
               </Fieldset.Root>
@@ -178,6 +198,17 @@ const ConsumerSignUp = () => {
           </Stack>
         </Box>
       </HStack>
+      <Box
+        display={success ? "block" : "none"}
+        bg={"#e3e3e3"}
+        p={"4rem 5rem"}
+        pos={"absolute"}
+        top={"30%"}
+        left={"35%"}
+        zIndex={"1000"}
+      >
+        <Text>Account created succesfully</Text>
+      </Box>
     </>
   );
 };
