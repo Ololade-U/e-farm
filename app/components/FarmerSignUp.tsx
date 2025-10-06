@@ -12,23 +12,52 @@ import {
   HStack,
   Text,
   Heading,
-  Flex,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { NextResponse } from "next/server";
+import { useState } from "react";
+
+
+const Role = z.enum(["BUYER", "FARMER"]);
+const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"])
 
 const schema = z.object({
-  email : z.email(),
-  password : z.string().min(7, {message : 'Password must be at least 8 characters long'}),
-  store : z.string().min(3, {message : 'Enter a valid store name'}),
-  country : z.string().min(5)
-})
+  email: z.email(),
+  password: z
+    .string()
+    .min(7, { message: "Password must be at least 8 characters long" }),
+  storeName: z.string().min(3, { message: "Enter a valid store name" }),
+  country: Country,
+  role: Role,
+});
 
-type FormData = z.infer<typeof schema>
+type FormData = z.infer<typeof schema>;
+
+
 
 const FarmerSignUp = () => {
-  const { register, handleSubmit, formState : {errors} } = useForm<FormData>({resolver : zodResolver(schema)});
+  const [success, setSuccess] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      role: "FARMER",
+    },
+  });
+  const onSubmit = async (data: FieldValues) => {
+    const response = await fetch("../api/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    if(response.ok){
+      setSuccess(true)
+    }
+  };
   return (
     <>
       <HStack h={"100vh"} gap={0}>
@@ -69,7 +98,7 @@ const FarmerSignUp = () => {
             w={"70%"}
             p={"3rem 2rem"}
           >
-            <form action="" onSubmit={handleSubmit(data => console.log(data))}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Fieldset.Root size="lg" maxW="md">
                 <Stack>
                   <Fieldset.Legend textAlign={"center"} fontSize={"2xl"}>
@@ -80,31 +109,61 @@ const FarmerSignUp = () => {
                 <Fieldset.Content>
                   <Field.Root>
                     <Field.Label>Email</Field.Label>
-                    <Input {...register('email')} name="email" type="email" placeholder="Enter your email" p={'0 .5rem'}/>
-                    {errors.email && <p className="text-red-600 m-0">{errors.email.message}</p>}
+                    <Input {...register("role")} name="role" type="hidden" />
+                    <Input
+                      {...register("email")}
+                      name="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      p={"0 .5rem"}
+                    />
+                    {errors.email && (
+                      <p className="text-red-600 m-0">{errors.email.message}</p>
+                    )}
                   </Field.Root>
 
                   <Field.Root>
                     <Field.Label>Password</Field.Label>
-                    <Input {...register('password')} name="password" type="password" placeholder="Enter your password" p={'0 .5rem'}/>
-                    {errors.password && <p className="text-red-600 m-0">{errors.password?.message}</p>}
+                    <Input
+                      {...register("password")}
+                      name="password"
+                      type="password"
+                      placeholder="Enter your password"
+                      p={"0 .5rem"}
+                    />
+                    {errors.password && (
+                      <p className="text-red-600 m-0">
+                        {errors.password?.message}
+                      </p>
+                    )}
                   </Field.Root>
 
                   <Field.Root>
                     <Field.Label>Name your store</Field.Label>
-                    <Input {...register('store')} name="store" placeholder="Enter your store name" p={'0 .5rem'}/>
-                    {errors.store && <p className="text-red-600 m-0">{errors.store?.message}</p>}
+                    <Input
+                      {...register("storeName")}
+                      name="storeName"
+                      placeholder="Enter your store name"
+                      p={"0 .5rem"}
+                    />
+                    {errors.storeName && (
+                      <p className="text-red-600 m-0">
+                        {errors.storeName?.message}
+                      </p>
+                    )}
                   </Field.Root>
 
-                  <Field.Root mb={'2rem'}>
+                  <Field.Root mb={"2rem"}>
                     <Field.Label>Country</Field.Label>
-                    <NativeSelect.Root>
-                      <NativeSelect.Field name="country" placeholder="Select Your Country" p={'0 .5rem'}>
-                        <For
-                          each={["Nigeria", "Ghana", "Cameroon", "Togo"]}
-                        >
+                    <NativeSelect.Root {...register("country")}>
+                      <NativeSelect.Field
+                        name="country"
+                        placeholder="Select Your Country"
+                        p={"0 .5rem"}
+                      >
+                        <For each={["Nigeria", "Ghana", "Cameroon", "Togo"]}>
                           {(item) => (
-                            <option {...register('country')} key={item} value={item}>
+                            <option key={item} value={item}>
                               {item}
                             </option>
                           )}
@@ -115,7 +174,7 @@ const FarmerSignUp = () => {
                   </Field.Root>
                 </Fieldset.Content>
 
-                <Button type="submit" alignSelf="center" p={'0 1rem'}>
+                <Button type="submit" alignSelf="center" p={"0 1rem"}>
                   Submit
                 </Button>
               </Fieldset.Root>
@@ -123,6 +182,9 @@ const FarmerSignUp = () => {
           </Stack>
         </Box>
       </HStack>
+      <Box display={success ? 'block' : 'none'} bg={'#e3e3e3'} p={'4rem 5rem'} pos={'absolute'} top={'30%'} left={'35%'} zIndex={'1000'}>
+        <Text>Account created succesfully</Text>
+      </Box>
     </>
   );
 };
