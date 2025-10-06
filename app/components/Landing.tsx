@@ -28,10 +28,18 @@ const Landing = () => {
       clearInterval(intervalId);
     };
   }, [userImageId]);
+  const isFixed = useStoreQuery((s) => s.isFixed);
   return (
     <div className="cont">
       <Header />
-      <Box overflowX={'hidden'} w={'100vw'} zIndex={"300"} h={"85vh"} bg={"#11312E"}>
+      <Box
+        mt={isFixed ? "15vh" : ''}
+        overflowX={"hidden"}
+        w={"100vw"}
+        zIndex={"300"}
+        h={"85vh"}
+        bg={"#11312E"}
+      >
         <Stack
           zIndex={"2000"}
           w={{ mdDown: "75%", mdTo2xl: "60%" }}
@@ -39,7 +47,7 @@ const Landing = () => {
           gap={"1.7rem"}
         >
           <Heading
-            zIndex={"2000"}
+            zIndex={"1500"}
             lineHeight={1}
             color={"white"}
             fontSize={{ lgTo2xl: "6xl", mdToLg: "5xl", mdDown: "3xl" }}
@@ -47,10 +55,10 @@ const Landing = () => {
             Farm-to-table made simple.
           </Heading>
           <Text
-            zIndex={"2000"}
+            zIndex={"1500"}
             color={"#98A2B3"}
-            fontSize={{ smDown:'1rem', lgDown: "1.3rem", lgTo2xl: "1.3rem" }}
-            maxWidth={{mdDown: '30ch'}}
+            fontSize={{ smDown: "1rem", lgDown: "1.3rem", lgTo2xl: "1.3rem" }}
+            maxWidth={{ mdDown: "30ch" }}
           >
             Trusted by the worlds best farms, grocers, and restaurants, Local
             Line is the leading e-commerce platform for buying & selling local
@@ -68,7 +76,7 @@ const Landing = () => {
                 borderRadius={"50%"}
                 src={`/user${el}.jpg`}
                 alt="User"
-                zIndex={"2000"}
+                zIndex={"1500"}
               />
             ))}
             <Box
@@ -85,7 +93,7 @@ const Landing = () => {
           </Flex>
           <HStack>
             <Button
-              p={{mdTo2xl: "1.5rem 1.3rem",  mdDown: "1.2rem 1rem"}}
+              p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
               fontSize={{ mdTo2xl: "xl" }}
               bg={"white"}
               color={"black"}
@@ -94,7 +102,7 @@ const Landing = () => {
             </Button>
             <Button
               bg={"#B37F37"}
-              p={{mdTo2xl: "1.5rem 1.3rem",  mdDown: "1.2rem 1rem"}}
+              p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
               zIndex={"2000"}
               fontSize={{ mdTo2xl: "xl" }}
             >
@@ -115,6 +123,7 @@ const Landing = () => {
             transitionDuration={".8"}
             transitionTimingFunction={"linear"}
             h={"100vh"}
+            zIndex={"5500"}
             src={`/user${userImageId}.jpg`}
             opacity={".9"}
           />
@@ -122,7 +131,7 @@ const Landing = () => {
         <Text
           bgBlendMode={"multiply"}
           bg="linear-gradient(to right, rgba(17, 49, 46, 1), rgba(17, 49, 46, .6), rgba(17, 49, 46, .1))"
-          zIndex={"900"}
+          zIndex={"1400"}
           h={"100vh"}
           width={"60%"}
           position={"absolute"}
@@ -134,13 +143,13 @@ const Landing = () => {
           position={"absolute"}
           h={"85vh"}
           width={"100%"}
-          top={'15vh'}
-          bg={'red'}
-          right={'-100%'}
-          animationName={isOpen ? 'navOpen' : ''}
-          animationDuration={'.3s'}
-          animationFillMode={'forwards'}
-          animationTimingFunction={'linear'}
+          top={"15vh"}
+          bg={"red"}
+          right={"-100%"}
+          animationName={isOpen ? "navOpen" : ""}
+          animationDuration={".3s"}
+          animationFillMode={"forwards"}
+          animationTimingFunction={"linear"}
         ></Text>
       </Box>
     </div>
