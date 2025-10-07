@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
         email: {
           label: "Email",
           type: "email",
-          placeholder: "Enter your emmail",
+          placeholder: "Enter your email",
         },
         password: {
           label: "Password",
@@ -46,6 +46,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  session :{
+    strategy : 'jwt'
+  }
 };
 
 const handler = NextAuth(authOptions);

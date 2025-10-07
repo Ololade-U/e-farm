@@ -13,8 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { FaStar } from "react-icons/fa";
 import useStoreQuery from "./store";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Landing = () => {
+  const { status, data: session } = useSession();
   const users = [1, 2, 3, 4, 5];
   let [userImageId, setUserImageId] = useState(1);
   const isOpen = useStoreQuery((s) => s.isOpen);
@@ -33,7 +36,7 @@ const Landing = () => {
     <div className="cont">
       <Header />
       <Box
-        mt={isFixed ? "15vh" : ''}
+        mt={isFixed ? "15vh" : ""}
         overflowX={"hidden"}
         w={"100vw"}
         zIndex={"300"}
@@ -100,14 +103,28 @@ const Landing = () => {
             >
               About Us
             </Button>
-            <Button
-              bg={"#B37F37"}
-              p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
-              zIndex={"2000"}
-              fontSize={{ mdTo2xl: "xl" }}
-            >
-              Create Your Account
-            </Button>
+            {status === "unauthenticated" && (
+              <Link href={"../register"}>
+                <Button
+                  bg={"#B37F37"}
+                  p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
+                  zIndex={"2000"}
+                  fontSize={{ mdTo2xl: "xl" }}
+                >
+                  Create Your Account
+                </Button>
+              </Link>
+            )}
+            {status === "authenticated" && (
+              <Button
+                bg={"#B37F37"}
+                p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
+                zIndex={"2000"}
+                fontSize={{ mdTo2xl: "xl" }}
+              >
+                Start Selling
+              </Button>
+            )}
           </HStack>
         </Stack>
         <Stack
