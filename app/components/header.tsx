@@ -6,8 +6,10 @@ import { IoIosMenu } from "react-icons/io";
 import useStoreQuery from "./store";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
+  const { status, data: session } = useSession();
   const setOpen = useStoreQuery((s) => s.setOpen);
   const isOpen = useStoreQuery((s) => s.isOpen);
   const isFixed = useStoreQuery((s) => s.isFixed);
@@ -32,7 +34,7 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
   return (
     <Box
       bgColor={"#11312E"}
@@ -83,32 +85,53 @@ const Header = () => {
             </Text>
           </Box>
         </Flex>
-        <Flex
-          display={{ mdDown: "none", mdTo2xl: "flex" }}
-          gap={"1rem"}
-          zIndex={"6500"}
-        >
-          <Button
-            bg={"white"}
-            color={"black"}
-            p={".7rem 1rem"}
-            fontSize={"1.1rem"}
-            borderRadius={".5rem"}
+        {status === "unauthenticated" && (
+          <Flex
+            display={{ mdDown: "none", mdTo2xl: "flex" }}
+            gap={"1rem"}
+            zIndex={"6500"}
           >
-            Log in
-          </Button>
-          <Link href={"../register"}>
-            <Button
-              bg={"#B37F37"}
-              color={"white"}
-              p={".7rem 1rem"}
-              fontSize={"1.1rem"}
-              borderRadius={".5rem"}
-            >
-              Sign Up
-            </Button>
-          </Link>
-        </Flex>
+            <Link href={"../api/auth/signin"}>
+              <Button
+                bg={"white"}
+                color={"black"}
+                p={".7rem 1rem"}
+                fontSize={"1.1rem"}
+                borderRadius={".5rem"}
+              >
+                Log in
+              </Button>
+            </Link>
+            <Link href={"../register"}>
+              <Button
+                bg={"#B37F37"}
+                color={"white"}
+                p={".7rem 1rem"}
+                fontSize={"1.1rem"}
+                borderRadius={".5rem"}
+              >
+                Sign Up
+              </Button>
+            </Link>
+          </Flex>
+        )}
+        {status === "authenticated" && (
+          <Text zIndex={"6500"} color={"white"}>
+            {session.user?.name}{" "}
+            <Link href={"../api/auth/signout"}>
+              <Button
+                bg={"#B37F37"}
+                color={"white"}
+                p={".7rem 1rem"}
+                fontSize={"1rem"}
+                borderRadius={".5rem"}
+                ml={'1rem'}
+              >
+                Sign Out
+              </Button>
+            </Link>
+          </Text>
+        )}
         <Flex display={{ mdDown: "flex", mdTo2xl: "none" }} zIndex={"1000"}>
           {isOpen ? (
             <IoClose

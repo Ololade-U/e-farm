@@ -22,7 +22,7 @@ export async function POST(request : NextRequest){
             hashedPassword : hashedPassword,
             role : body.role,
             storeName : body.storeName,
-            fullName : body.fullName,
+            name : body.name,
             phoneNumber : body.phoneNumber,
             country : body.country
         }

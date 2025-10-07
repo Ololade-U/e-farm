@@ -13,6 +13,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import z from "zod";
@@ -21,7 +22,7 @@ const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"]);
 const Role = z.enum(["BUYER", "FARMER"]);
 
 const schema = z.object({
-  fullName: z.string().min(3, { message: "Enter your name" }),
+  name: z.string().min(3, { message: "Enter your name" }),
   email: z.email(),
   password: z
     .string()
@@ -35,9 +36,11 @@ type FormData = z.infer<typeof schema>;
 
 const ConsumerSignUp = () => {
   const [success, setSuccess] = useState(false);
+  const [userExists, setUserExists] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -53,7 +56,9 @@ const ConsumerSignUp = () => {
     });
     if (response.ok) {
       setSuccess(true);
-      location.reload()
+      reset();
+    } else {
+      setUserExists(true);
     }
   };
   return (
@@ -107,17 +112,20 @@ const ConsumerSignUp = () => {
 
                 <Fieldset.Content>
                   <Field.Root>
-                    <Field.Label>Full Name</Field.Label>
                     <Input {...register("role")} name="role" type="hidden" />
+                  </Field.Root>
+
+                  <Field.Root>
+                    <Field.Label>Full Name</Field.Label>
                     <Input
-                      {...register("fullName")}
-                      name="fullName"
+                      {...register("name")}
+                      name="name"
                       placeholder="Enter your name"
                       p={"0 .5rem"}
                       mb={0}
                     />
-                    {errors.email && (
-                      <p className="text-red-600 m-0">{errors.email.message}</p>
+                    {errors.name && (
+                      <p className="text-red-600 m-0">{errors.name.message}</p>
                     )}
                   </Field.Root>
 
@@ -132,6 +140,9 @@ const ConsumerSignUp = () => {
                     />
                     {errors.email && (
                       <p className="text-red-600 m-0">{errors.email.message}</p>
+                    )}
+                    {userExists && (
+                      <p className="text-red-600 m-0">User already exists</p>
                     )}
                   </Field.Root>
 
@@ -159,8 +170,10 @@ const ConsumerSignUp = () => {
                       placeholder="Enter your phone numebr"
                       p={"0 .5rem"}
                     />
-                    {errors.email && (
-                      <p className="text-red-600 m-0">{errors.email.message}</p>
+                    {errors.phoneNumber && (
+                      <p className="text-red-600 m-0">
+                        {errors.phoneNumber.message}
+                      </p>
                     )}
                   </Field.Root>
 
@@ -199,15 +212,24 @@ const ConsumerSignUp = () => {
         </Box>
       </HStack>
       <Box
-        display={success ? "block" : "none"}
-        bg={"#e3e3e3"}
-        p={"4rem 5rem"}
+        display={success ? "flex" : "none"}
+        w={"40vw"}
+        h={"50vh"}
         pos={"absolute"}
-        top={"30%"}
+        top={"25%"}
         left={"35%"}
         zIndex={"1000"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        gap={"2rem"}
+        justifyContent={"center"}
+        borderRadius={"1rem"}
+        bg="linear-gradient(to right, rgba(17, 49, 46, 1), rgba(17, 49, 46, .8))"
       >
-        <Text>Account created succesfully</Text>
+        <Text color={'white'}>Account created succesfully!</Text>
+        <Link href={"../api/auth/signin"}>
+          <Button p={"0 2rem"} bg={"#09734E"}>Login</Button>
+        </Link>
       </Box>
     </>
   );

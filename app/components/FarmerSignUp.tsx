@@ -16,12 +16,11 @@ import {
 import { FieldValues, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NextResponse } from "next/server";
 import { useState } from "react";
-
+import Link from "next/link";
 
 const Role = z.enum(["BUYER", "FARMER"]);
-const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"])
+const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"]);
 
 const schema = z.object({
   email: z.email(),
@@ -35,13 +34,13 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-
-
 const FarmerSignUp = () => {
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(false);
+  const [userExists, setUserExists] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -54,8 +53,11 @@ const FarmerSignUp = () => {
       method: "POST",
       body: JSON.stringify(data),
     });
-    if(response.ok){
-      setSuccess(true)
+    if (response.ok) {
+      setSuccess(true);
+      reset();
+    } else {
+      setUserExists(true);
     }
   };
   return (
@@ -120,6 +122,9 @@ const FarmerSignUp = () => {
                     {errors.email && (
                       <p className="text-red-600 m-0">{errors.email.message}</p>
                     )}
+                    {userExists && (
+                      <p className="text-red-600 m-0">User already exists</p>
+                    )}
                   </Field.Root>
 
                   <Field.Root>
@@ -174,16 +179,40 @@ const FarmerSignUp = () => {
                   </Field.Root>
                 </Fieldset.Content>
 
-                <Button type="submit" alignSelf="center" p={"0 1rem"}>
-                  Submit
+                <Button
+                  type="submit"
+                  bg={"#09734E"}
+                  alignSelf="center"
+                  p={"0 5rem"}
+                >
+                  Sign Up
                 </Button>
               </Fieldset.Root>
             </form>
           </Stack>
         </Box>
       </HStack>
-      <Box display={success ? 'block' : 'none'} bg={'#e3e3e3'} p={'4rem 5rem'} pos={'absolute'} top={'30%'} left={'35%'} zIndex={'1000'}>
-        <Text>Account created succesfully</Text>
+      <Box
+        display={success ? "flex" : "none"}
+        w={"40vw"}
+        h={"50vh"}
+        pos={"absolute"}
+        top={"25%"}
+        left={"35%"}
+        zIndex={"1000"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        gap={"2rem"}
+        justifyContent={"center"}
+        borderRadius={"1rem"}
+        bg="linear-gradient(to right, rgba(17, 49, 46, 1), rgba(17, 49, 46, .8))"
+      >
+        <Text color={"white"}>Account created succesfully!</Text>
+        <Link href={"../api/auth/signin"}>
+          <Button p={"0 2rem"} bg={"#09734E"}>
+            Login
+          </Button>
+        </Link>
       </Box>
     </>
   );
