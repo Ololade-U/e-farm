@@ -3,6 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
 
 
+export async function GET(request : NextRequest){
+    const users = await prisma.user.findMany()
+    return NextResponse.json(users)
+}
+
+
 
 export async function POST(request : NextRequest){
     const body = await request.json()

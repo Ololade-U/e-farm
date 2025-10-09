@@ -30,10 +30,12 @@ model User {
   accounts       Account[]
   sessions       Session[]
   Authenticator  Authenticator[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Post           Post[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
+
+
 
 model Account {
   id                       String  @id @default(cuid())
@@ -94,7 +96,34 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+model Post {
+  id          String   @id @default(cuid())
+  userId      String   
+  description String
+  type        PostType
+  amount      Int
+  quantity    Int      @default(1)
+  status      Status
+  img         String?
+  postedAt    DateTime @default(now())
+  user        User?     @relation(fields: [userId], references: [id])
+}
+
 enum Role {
   FARMER
   BUYER
+}
+
+enum PostType {
+  Vegetable
+  Fruit
+  Grain
+  Livestock
+  Dairy
+}
+
+enum Status {
+  OnSale
+  SoldOut
+  Inactive
 }

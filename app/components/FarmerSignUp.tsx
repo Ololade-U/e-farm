@@ -59,6 +59,7 @@ const FarmerSignUp = () => {
     } else {
       setUserExists(true);
     }
+
   };
   return (
     <>

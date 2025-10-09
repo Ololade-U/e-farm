@@ -16,6 +16,7 @@ import useStoreQuery from "./store";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
+
 const Landing = () => {
   const { status, data: session } = useSession();
   const users = [1, 2, 3, 4, 5];
@@ -26,6 +27,7 @@ const Landing = () => {
     const intervalId = setInterval(() => {
       setUserImageId(userImageId < 6 ? userImageId + 1 : (userImageId = 1));
     }, 3000);
+
 
     return () => {
       clearInterval(intervalId);
@@ -116,6 +118,7 @@ const Landing = () => {
               </Link>
             )}
             {status === "authenticated" && (
+              <Link href={'../home/farmer'}>
               <Button
                 bg={"#B37F37"}
                 p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
@@ -124,6 +127,7 @@ const Landing = () => {
               >
                 Start Selling
               </Button>
+              </Link>
             )}
           </HStack>
         </Stack>
