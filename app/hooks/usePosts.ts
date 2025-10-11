@@ -4,11 +4,25 @@ import useStoreQuery from "../components/store";
 
 import { useState, useEffect } from 'react';
 
-const usePosts = () => { 
+interface Props{
+    id : string,
+    userId : string,
+    description : string,
+    type : string,
+    amount : number,
+    quantity : number,
+    onSale : number,
+    postedAt : number,
+    status : string,
+    img : string
+}
+
+const usePost = () => { 
     const userId = useStoreQuery((s) => s.userId); 
-    const [posts, setPosts] = useState(null);
+    const [posts, setPosts] = useState<Props[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const postId = useStoreQuery((s)=> s.postId)
 
     useEffect(() => {
         if (!userId) {
@@ -24,7 +38,7 @@ const usePosts = () => {
                 const response = await fetch(`../api/posts/${userId}`, {
                     method: "GET",
                 });
-                
+                console.log(response)
                 // Handle non-200 responses
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -44,10 +58,10 @@ const usePosts = () => {
 
         fetchPosts();
         
-    }, [userId]); // Dependency array: Re-run effect when userId changes
+    }, [userId, postId]); // Dependency array: Re-run effect when userId changes
 
     // The hook returns the current state values
     return { posts, isLoading, error };
 }
 
-export default usePosts;
+export default usePost;

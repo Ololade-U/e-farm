@@ -1,12 +1,19 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useStoreQuery from '../components/store';
 import { useSession } from "next-auth/react";
 
 
+interface Props{
+    id : string,
+    username : string,
+    email : string
+}
+
 const useUserSession = () => {
     // 1. Get the session data
     const { data: session } = useSession();
+    const [user, setUser] = useState<Props | null>(null)
     
     // 2. Get the function to set the state
     const setUserId = useStoreQuery((s) => s.setUserId);
@@ -37,7 +44,7 @@ const useUserSession = () => {
 
                 // 3. Parse the JSON data
                 const userObject = await response.json();
-
+                setUser(userObject)
                 // 4. Update the global store with the retrieved user ID
                 setUserId(userObject.id);
 
@@ -53,8 +60,7 @@ const useUserSession = () => {
     // setUserId is stable, so we primarily depend on the session email.
     }, [session?.user?.email, setUserId]); 
 
-    // This hook doesn't need to return anything, as its primary purpose 
-    // is the side effect of setting the global state.
+    return user
 };
 
 export default useUserSession;

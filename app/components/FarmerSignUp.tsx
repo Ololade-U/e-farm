@@ -18,12 +18,14 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Link from "next/link";
+import useStoreQuery from "./store";
 
 const Role = z.enum(["BUYER", "FARMER"]);
 const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"]);
 
 const schema = z.object({
   email: z.email(),
+  username: z.string().min(3),
   password: z
     .string()
     .min(7, { message: "Password must be at least 8 characters long" }),
@@ -36,7 +38,10 @@ type FormData = z.infer<typeof schema>;
 
 const FarmerSignUp = () => {
   const [success, setSuccess] = useState(false);
-  const [userExists, setUserExists] = useState(false);
+  const setUser = useStoreQuery((s) => s.setUser);
+  const setUserName = useStoreQuery((s) => s.setUserName);
+  const userExist = useStoreQuery((s) => s.userExist);
+  const userNameExist = useStoreQuery((s) => s.userNameExist);
   const {
     register,
     handleSubmit,
@@ -49,21 +54,50 @@ const FarmerSignUp = () => {
     },
   });
   const onSubmit = async (data: FieldValues) => {
-    const response = await fetch("../api/users", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      setSuccess(true);
-      reset();
-    } else {
-      setUserExists(true);
-    }
+    try {
+      const response = await fetch("../api/users", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        setSuccess(true);
+        reset();
+      } else {
+        // 🛑 THIS IS WHERE YOU ACCESS THE SERVER ERROR MESSAGE 🛑
+        const errorData = await response.json();
 
+        // Check if errorData and errorData.error exist
+        if (errorData && errorData.error) {
+          // Now you have the specific string, e.g., "User already exists"
+          const serverErrorMessage = errorData.error;
+
+          // 1. Update client state based on the message
+          if (serverErrorMessage === "User already exists") {
+            // Assuming you have a way to set client state, e.g., via your store
+            setUser(true);
+            setUserName(false)
+            // This is where you would call the store setter function (e.g., setExistEmail(true))
+          } else if (serverErrorMessage === "Username already exists") {
+            setUserName(true);
+            setUser(false)
+            // This is where you would call the store setter function (e.g., setExistUsername(true))
+          }
+
+          // 2. Throw an error to stop execution and go to the catch block (optional,
+          // but good practice to maintain the existing structure)
+          throw new Error(serverErrorMessage);
+        } else {
+          // Handle unexpected non-JSON or missing error body
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      }
+    } catch (err) {
+      console.error("Fetch operation error:", err);
+    }
   };
   return (
     <>
-      <HStack h={"100vh"} gap={0}>
+      <HStack h={"100vh"} gap={0} overflowX={"hidden"}>
         <Box
           h={"100%"}
           textAlign={"left"}
@@ -94,15 +128,16 @@ const FarmerSignUp = () => {
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
+          overflowX={"auto"}
         >
           <Stack
             border={"1px solid black"}
             borderRadius={".8rem"}
             w={"70%"}
-            p={"3rem 2rem"}
+            p={"2rem 2rem"}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Fieldset.Root size="lg" maxW="md">
+              <Fieldset.Root gap={".5rem"} size="sm" maxW="md">
                 <Stack>
                   <Fieldset.Legend textAlign={"center"} fontSize={"2xl"}>
                     Create Account
@@ -111,8 +146,11 @@ const FarmerSignUp = () => {
 
                 <Fieldset.Content>
                   <Field.Root>
-                    <Field.Label>Email</Field.Label>
                     <Input {...register("role")} name="role" type="hidden" />
+                  </Field.Root>
+
+                  <Field.Root>
+                    <Field.Label>Email</Field.Label>
                     <Input
                       {...register("email")}
                       name="email"
@@ -123,8 +161,28 @@ const FarmerSignUp = () => {
                     {errors.email && (
                       <p className="text-red-600 m-0">{errors.email.message}</p>
                     )}
-                    {userExists && (
+                    {userExist && (
                       <p className="text-red-600 m-0">User already exists</p>
+                    )}
+                  </Field.Root>
+
+                  <Field.Root>
+                    <Field.Label>UserName</Field.Label>
+                    <Input
+                      {...register("username")}
+                      name="username"
+                      placeholder="Enter your Username"
+                      p={"0 .5rem"}
+                    />
+                    {errors.username && (
+                      <p className="text-red-600 m-0">
+                        {errors.username.message}
+                      </p>
+                    )}
+                    {userNameExist && (
+                      <p className="text-red-600 m-0">
+                        Username already exists
+                      </p>
                     )}
                   </Field.Root>
 

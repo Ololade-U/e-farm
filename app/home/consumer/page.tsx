@@ -1,12 +1,8 @@
 import React from 'react'
-import Products from './products'
-
 
 const page = () => {
   return (
-    <div>
-      <Products/>
-    </div>
+    <div>page</div>
   )
 }
 

@@ -7,6 +7,7 @@ import useStoreQuery from "./store";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import SignOutButton from "./Logout";
 
 const Header = () => {
   const { status, data: session } = useSession();
@@ -91,7 +92,7 @@ const Header = () => {
             gap={"1rem"}
             zIndex={"6500"}
           >
-            <Link href={"../api/auth/signin"}>
+            <Link href={"../login"}>
               <Button
                 bg={"white"}
                 color={"black"}
@@ -118,18 +119,7 @@ const Header = () => {
         {status === "authenticated" && (
           <Text zIndex={"6500"} color={"white"}>
             {session.user?.name}{" "}
-            <Link href={"../api/auth/signout"}>
-              <Button
-                bg={"#B37F37"}
-                color={"white"}
-                p={".7rem 1rem"}
-                fontSize={"1rem"}
-                borderRadius={".5rem"}
-                ml={'1rem'}
-              >
-                Sign Out
-              </Button>
-            </Link>
+            <SignOutButton/>
           </Text>
         )}
         <Flex display={{ mdDown: "flex", mdTo2xl: "none" }} zIndex={"1000"}>

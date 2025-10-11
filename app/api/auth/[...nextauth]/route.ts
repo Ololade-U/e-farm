@@ -1,9 +1,10 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/prisma/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -31,13 +32,15 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
+        
+
         if (!user) return null;
 
         const passwordMatch = await bcrypt.compare(
           credentials.password,
           user.hashedPassword!
         );
-
+        
         return passwordMatch ? user : null;
       },
     }),
@@ -48,7 +51,25 @@ export const authOptions: NextAuthOptions = {
   ],
   session :{
     strategy : 'jwt'
-  }
+  },
+  callbacks : {
+    async jwt({token, user, profile, account}){
+      if(user){
+        token.role = (user as any).role;
+        token.id = user.id
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if(session.user){
+        session.user.id = token.id as string;
+        session.user.role = token.role as string; 
+      }
+       
+
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
