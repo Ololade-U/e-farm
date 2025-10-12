@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Stack, Fieldset, Field, Input, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Fieldset,
+  Field,
+  Input,
+  Button,
+  Spinner,
+} from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -32,8 +40,6 @@ const Login = () => {
       redirect: false,
     });
 
-    setLoading(false);
-
     if (result?.error) {
       alert("Incorrect login info");
       return;
@@ -50,6 +56,7 @@ const Login = () => {
       // Fallback if role is undefined or another value
       router.push("/");
     }
+    setLoading(false);
   };
 
   return (
@@ -117,6 +124,7 @@ const Login = () => {
               alignSelf="center"
               p={"0 5rem"}
             >
+              {isLoading && <Spinner size={"sm"} color="blue.400" />}
               Sign In
             </Button>
           </Fieldset.Root>

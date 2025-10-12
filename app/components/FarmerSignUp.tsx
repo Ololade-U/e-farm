@@ -12,6 +12,7 @@ import {
   HStack,
   Text,
   Heading,
+  Spinner,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
 import z from "zod";
@@ -42,6 +43,7 @@ const FarmerSignUp = () => {
   const setUserName = useStoreQuery((s) => s.setUserName);
   const userExist = useStoreQuery((s) => s.userExist);
   const userNameExist = useStoreQuery((s) => s.userNameExist);
+  const [isLoading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -54,6 +56,7 @@ const FarmerSignUp = () => {
     },
   });
   const onSubmit = async (data: FieldValues) => {
+    setLoading(true)
     setUser(false);
     setUserName(false);
     try {
@@ -65,37 +68,25 @@ const FarmerSignUp = () => {
         setSuccess(true);
         reset();
       } else {
-        // 🛑 THIS IS WHERE YOU ACCESS THE SERVER ERROR MESSAGE 🛑
         const errorData = await response.json();
-
-        // Check if errorData and errorData.error exist
         if (errorData && errorData.error) {
-          // Now you have the specific string, e.g., "User already exists"
           const serverErrorMessage = errorData.error;
-
-          // 1. Update client state based on the message
           if (serverErrorMessage === "User already exists") {
-            // Assuming you have a way to set client state, e.g., via your store
             setUser(true);
             setUserName(false);
-            // This is where you would call the store setter function (e.g., setExistEmail(true))
           } else if (serverErrorMessage === "Username already exists") {
             setUserName(true);
             setUser(false);
-            // This is where you would call the store setter function (e.g., setExistUsername(true))
           }
-
-          // 2. Throw an error to stop execution and go to the catch block (optional,
-          // but good practice to maintain the existing structure)
           throw new Error(serverErrorMessage);
         } else {
-          // Handle unexpected non-JSON or missing error body
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
       }
     } catch (err) {
       console.error("Fetch operation error:", err);
     }
+    setLoading(false)
   };
   return (
     <>
@@ -246,6 +237,7 @@ const FarmerSignUp = () => {
                   alignSelf="center"
                   p={"0 5rem"}
                 >
+                  {isLoading && <Spinner size={"sm"} color="blue.400" />}
                   Sign Up
                 </Button>
               </Fieldset.Root>

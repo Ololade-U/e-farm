@@ -16,6 +16,7 @@ import {
   For,
   Input,
   NativeSelect,
+  Spinner,
 } from "@chakra-ui/react";
 import { RiShoppingBag4Fill } from "react-icons/ri";
 import { RiMenuAddFill } from "react-icons/ri";
@@ -71,7 +72,7 @@ const FarmerHomePage = ({ children }: Props) => {
   const [publicId, setPublicId] = useState("");
   const [upload, setUpload] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -89,14 +90,13 @@ const FarmerHomePage = ({ children }: Props) => {
   const userId = useStoreQuery((s) => s.userId);
   const user = useUserSession();
   const onSubmit = async (data: FieldValues) => {
-    console.log(userId);
+    setLoading(true)
     try {
       const response = await fetch(`../api/posts/${userId}`, {
         method: "POST",
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        setSuccess(true);
         setUploadSuccess(true);
         reset();
       } else {
@@ -111,6 +111,7 @@ const FarmerHomePage = ({ children }: Props) => {
     } catch (err) {
       console.error("Fetch operation error:", err);
     }
+    setLoading(false)
   };
 
   // const { posts } = usePost();
@@ -415,6 +416,7 @@ const FarmerHomePage = ({ children }: Props) => {
                 alignSelf="center"
                 p={"0 5rem"}
               >
+                {isLoading && <Spinner size={"sm"} color="blue.400" />}
                 Upload Product
               </Button>
             </Fieldset.Root>

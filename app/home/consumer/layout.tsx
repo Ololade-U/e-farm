@@ -1,14 +1,18 @@
+"use client";
 import { HStack, Box, Input, Stack, Image, Text } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoPerson } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
+import useStoreQuery from "@/app/components/store";
+import Link from "next/link";
 
 interface Props {
   children: ReactNode;
 }
 
 const layout = ({ children }: Props) => {
+  const cart = useStoreQuery((s) => s.cart);
   return (
     <Stack>
       <HStack
@@ -19,6 +23,8 @@ const layout = ({ children }: Props) => {
         w={"100%"}
         borderBottom={"1px solid #e3e3e3"}
         bgColor={"#11312E"}
+        pos={"fixed"}
+        zIndex={"2000"}
       >
         <HStack alignItems={"center"}>
           <Box hideFrom={"md"}>
@@ -45,26 +51,29 @@ const layout = ({ children }: Props) => {
           alignItems={"center"}
         >
           <Box pos={"relative"}>
-            <IoPerson fill="white" size={"1.5rem"} cursor={'pointer'}/>
+            <IoPerson fill="white" size={"1.5rem"} cursor={"pointer"} />
+            
           </Box>
-          <Box pos={"relative"} right={0}>
-            <FaCartShopping fill="white" size={"1.5rem"} cursor={'pointer'}/>
-            <Text
-              fontSize={".4rem"}
-              p={".2rem .4rem"}
-              borderRadius={"50%"}
-              bgColor={"black"}
-              pos={"absolute"}
-              right={"-.3rem"}
-              top={"-.5rem"}
-              color={"white"}
-            >
-              0
-            </Text>
-          </Box>
+          <Link href={"./consumer/cart"}>
+            <Box pos={"relative"} right={0}>
+              <FaCartShopping fill="white" size={"1.5rem"} cursor={"pointer"} />
+              <Text
+                fontSize={".4rem"}
+                p={".2rem .4rem"}
+                borderRadius={"50%"}
+                bgColor={"black"}
+                pos={"absolute"}
+                right={"-.3rem"}
+                top={"-.5rem"}
+                color={"white"}
+              >
+                {cart.length}
+              </Text>
+            </Box>
+          </Link>
         </HStack>
       </HStack>
-      <Box>{children}</Box>
+      <Box mt={"17vh"}>{children}</Box>
     </Stack>
   );
 };

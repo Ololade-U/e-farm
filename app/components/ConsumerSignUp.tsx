@@ -11,6 +11,7 @@ import {
   NativeSelect,
   For,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -42,6 +43,7 @@ const ConsumerSignUp = () => {
   const setUserName = useStoreQuery((s) => s.setUserName);
   const userExist = useStoreQuery((s) => s.userExist);
   const userNameExist = useStoreQuery((s) => s.userNameExist);
+  const [isLoading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -55,6 +57,7 @@ const ConsumerSignUp = () => {
   });
 
   const onSubmit = async (data: FieldValues) => {
+    setLoading(true);
     setUser(false);
     setUserName(false);
     try {
@@ -84,11 +87,14 @@ const ConsumerSignUp = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
   return (
     <>
-      <HStack h={"100vh"} gap={0} overflowY={'hidden'}>
+      <HStack h={"100vh"} gap={0} overflowY={"hidden"}>
         <Box
           h={"100%"}
           textAlign={"left"}
@@ -120,15 +126,15 @@ const ConsumerSignUp = () => {
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          overflowY={'auto'}
-          pt={'2rem'}
+          overflowY={"auto"}
+          pt={"2rem"}
         >
           <Stack
             border={"1px solid black"}
             borderRadius={".8rem"}
             w={"70%"}
             p={"1rem 2rem"}
-            mt={'2rem'}
+            mt={"2rem"}
           >
             <form action="" onSubmit={handleSubmit(onSubmit)}>
               <Fieldset.Root size="lg" maxW="md">
@@ -252,6 +258,7 @@ const ConsumerSignUp = () => {
                   alignSelf="center"
                   p={"0 5rem"}
                 >
+                  {isLoading && <Spinner size={"sm"} color="blue.400" />}
                   Sign Up
                 </Button>
               </Fieldset.Root>

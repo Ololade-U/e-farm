@@ -1,7 +1,11 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { ReactNode } from "react";
 
-const EmptyPage = () => {
+interface Props{
+  children : ReactNode
+}
+
+const EmptyPage = ({children}:Props) => {
   return (
     <div>
       <Box
@@ -10,7 +14,7 @@ const EmptyPage = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Text fontSize={"2xl"}>No results found for your search.</Text>
+        <Box fontSize={"2xl"}>{children}</Box>
       </Box>
     </div>
   );

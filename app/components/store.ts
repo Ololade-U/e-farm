@@ -1,5 +1,6 @@
 import { Session } from "inspector/promises";
 import { create } from "zustand";
+import { Product } from "./ProductCard";
 
 
 interface StoreQuery{
@@ -11,6 +12,8 @@ interface StoreQuery{
     userNameExist : boolean;
     main : string;
     postId : string;
+    cart : string[];
+    products : Product[] | null
     setOpen : (value : boolean)=> void;
     setFixed : (value : boolean) => void;
     setSession : (value : Session | null)=> void
@@ -19,6 +22,9 @@ interface StoreQuery{
     setUserName  : (value : boolean) => void
     setMain : (value : string) => void
     setPostId : (value : string) => void
+    addToCart : (value : string) => void
+    removeCart : (value : string) => void
+    setProducts : (product : Product[] | null) => void
 }
 
 const useStoreQuery = create<StoreQuery>((set)=>({
@@ -30,6 +36,8 @@ const useStoreQuery = create<StoreQuery>((set)=>({
     userNameExist : false,
     postId : '',
     main : 'My Products',
+    cart : [],
+    products : [],
     setOpen : (value) => set(()=> ({
         isOpen : value
     })),
@@ -53,6 +61,15 @@ const useStoreQuery = create<StoreQuery>((set)=>({
     })),
     setPostId : (value) => set(()=> ({
         postId : value
+    })),
+    addToCart : (value) => set((store)=> ({
+        cart : [...store.cart, value]
+    })),
+    removeCart : (value) => set((store)=> ({
+        cart : store.cart.filter((id)=> id !== value)
+    })),
+    setProducts : (product) => set((store)=>({
+        products : product
     }))
 }))
 

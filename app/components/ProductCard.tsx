@@ -9,10 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import React from "react";
-import { FaBookmark } from "react-icons/fa";
 import { BsCartPlus } from "react-icons/bs";
+import useStoreQuery from "./store";
+import { BsCartCheck } from "react-icons/bs";
 
-interface Product {
+export interface Product {
   id: string;
   description: string;
   type: string;
@@ -27,6 +28,9 @@ interface Prop {
 }
 
 const ProductCard = ({ product }: Prop) => {
+  const cart = useStoreQuery((s)=> s.cart)
+  const addToCart = useStoreQuery((s)=> s.addToCart)
+  const removeCart = useStoreQuery((s)=> s.removeCart)
   return (
     <>
       <Card.Root borderRadius={"1rem"} overflow={"hidden"} p={"1rem"}>
@@ -40,17 +44,21 @@ const ProductCard = ({ product }: Prop) => {
             w={"100%"}
           />
         )}
-        <Flex justify={"flex-end"} alignItems={"flex-start"}>
+        <Flex pos={'relative'} h={'100%'} justify={"flex-end"} alignItems={"flex-start"}>
           <Box
             cursor={"pointer"}
             // bgColor={{ _dark: "blue.900", _light: "#e3e3e3" }}
             // p={".8rem .8rem"}
-            top={"-1rem"}
+            bottom={"0rem"}
             right={".5rem"}
-            position={"relative"}
+            position={"absolute"}
             title="Add to watchlist"
+            bgColor={'white'}
+            p={'1rem'}
+            borderRadius={'50%'}
+            onClick={()=> cart.includes(product.id) ? removeCart(product.id) : addToCart(product.id)}
           >
-            <BsCartPlus/>
+            {cart.includes(product.id) ?  <BsCartCheck size={'1.5rem'}/> : <BsCartPlus size={'1.5rem'}/>}
           </Box>
         </Flex>
         <Card.Body p={0}>
