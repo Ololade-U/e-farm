@@ -24,6 +24,10 @@ body{
     flex-direction: column;
 }
 
+.nav-form{
+    width: 50%;
+}
+
 @keyframes navOpen {
     100%{
         right: 0;

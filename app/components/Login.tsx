@@ -44,7 +44,7 @@ const Login = () => {
     const userRole = session?.user?.role;
     if (userRole === "FARMER") {
       router.push("../home/farmer");
-    } else if (userRole === "CONSUMER") {
+    } else if (userRole === "BUYER") {
       router.push("../home/consumer");
     } else {
       // Fallback if role is undefined or another value
@@ -63,7 +63,7 @@ const Login = () => {
       overflowX={"auto"}
     >
       <Stack
-      bg={'white'}
+        bg={"white"}
         border={"1px solid black"}
         borderRadius={".8rem"}
         w={"40%"}
@@ -72,13 +72,17 @@ const Login = () => {
         <form onSubmit={handleSubmit(handleSignIn)}>
           <Fieldset.Root gap={".5rem"} size="sm" maxW="md">
             <Stack>
-              <Fieldset.Legend mb={'2rem'} textAlign={"center"} fontSize={"2xl"}>
+              <Fieldset.Legend
+                mb={"2rem"}
+                textAlign={"center"}
+                fontSize={"2xl"}
+              >
                 Login
               </Fieldset.Legend>
             </Stack>
 
             <Fieldset.Content>
-              <Field.Root mb={'1rem'}>
+              <Field.Root mb={"1rem"}>
                 <Field.Label>Email</Field.Label>
                 <Input
                   {...register("email")}
@@ -92,7 +96,7 @@ const Login = () => {
                 )}
               </Field.Root>
 
-              <Field.Root mb={'2rem'}>
+              <Field.Root mb={"2rem"}>
                 <Field.Label>Password</Field.Label>
                 <Input
                   {...register("password")}

@@ -54,6 +54,8 @@ const FarmerSignUp = () => {
     },
   });
   const onSubmit = async (data: FieldValues) => {
+    setUser(false);
+    setUserName(false);
     try {
       const response = await fetch("../api/users", {
         method: "POST",
@@ -75,11 +77,11 @@ const FarmerSignUp = () => {
           if (serverErrorMessage === "User already exists") {
             // Assuming you have a way to set client state, e.g., via your store
             setUser(true);
-            setUserName(false)
+            setUserName(false);
             // This is where you would call the store setter function (e.g., setExistEmail(true))
           } else if (serverErrorMessage === "Username already exists") {
             setUserName(true);
-            setUser(false)
+            setUser(false);
             // This is where you would call the store setter function (e.g., setExistUsername(true))
           }
 
@@ -267,7 +269,7 @@ const FarmerSignUp = () => {
         bg="linear-gradient(to right, rgba(17, 49, 46, 1), rgba(17, 49, 46, .8))"
       >
         <Text color={"white"}>Account created succesfully!</Text>
-        <Link href={"../api/auth/signin"}>
+        <Link href={"../login"}>
           <Button p={"0 2rem"} bg={"#09734E"}>
             Login
           </Button>

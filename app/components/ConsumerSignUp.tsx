@@ -17,6 +17,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import z from "zod";
+import useStoreQuery from "./store";
 
 const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"]);
 const Role = z.enum(["BUYER", "FARMER"]);
@@ -30,13 +31,17 @@ const schema = z.object({
   phoneNumber: z.string().min(10, { message: "Enter a valid phone number" }),
   country: Country,
   role: Role,
+  username: z.string().min(2),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const ConsumerSignUp = () => {
   const [success, setSuccess] = useState(false);
-  const [userExists, setUserExists] = useState(false);
+  const setUser = useStoreQuery((s) => s.setUser);
+  const setUserName = useStoreQuery((s) => s.setUserName);
+  const userExist = useStoreQuery((s) => s.userExist);
+  const userNameExist = useStoreQuery((s) => s.userNameExist);
   const {
     register,
     handleSubmit,
@@ -50,20 +55,40 @@ const ConsumerSignUp = () => {
   });
 
   const onSubmit = async (data: FieldValues) => {
-    const response = await fetch("../api/users", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      setSuccess(true);
-      reset();
-    } else {
-      setUserExists(true);
-    }
+    setUser(false);
+    setUserName(false);
+    try {
+      const response = await fetch("../api/users", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        setSuccess(true);
+        reset();
+      } else {
+        const errorData = await response.json();
+
+        if (errorData && errorData.error) {
+          const serverErrorMessage = errorData.error;
+
+          if (serverErrorMessage === "User already exists") {
+            setUser(true);
+            setUserName(false);
+          } else if (serverErrorMessage === "Username already exists") {
+            setUserName(true);
+            setUser(false);
+          }
+
+          throw new Error(serverErrorMessage);
+        } else {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      }
+    } catch (error) {}
   };
   return (
     <>
-      <HStack h={"100vh"} gap={0}>
+      <HStack h={"100vh"} gap={0} overflowY={'hidden'}>
         <Box
           h={"100%"}
           textAlign={"left"}
@@ -95,12 +120,15 @@ const ConsumerSignUp = () => {
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
+          overflowY={'auto'}
+          pt={'2rem'}
         >
           <Stack
             border={"1px solid black"}
             borderRadius={".8rem"}
             w={"70%"}
             p={"1rem 2rem"}
+            mt={'2rem'}
           >
             <form action="" onSubmit={handleSubmit(onSubmit)}>
               <Fieldset.Root size="lg" maxW="md">
@@ -141,7 +169,7 @@ const ConsumerSignUp = () => {
                     {errors.email && (
                       <p className="text-red-600 m-0">{errors.email.message}</p>
                     )}
-                    {userExists && (
+                    {userExist && (
                       <p className="text-red-600 m-0">User already exists</p>
                     )}
                   </Field.Root>
@@ -158,6 +186,26 @@ const ConsumerSignUp = () => {
                     {errors.password && (
                       <p className="text-red-600 m-0">
                         {errors.password?.message}
+                      </p>
+                    )}
+                  </Field.Root>
+
+                  <Field.Root>
+                    <Field.Label>UserName</Field.Label>
+                    <Input
+                      {...register("username")}
+                      name="username"
+                      placeholder="Enter your Username"
+                      p={"0 .5rem"}
+                    />
+                    {errors.username && (
+                      <p className="text-red-600 m-0">
+                        {errors.username.message}
+                      </p>
+                    )}
+                    {userNameExist && (
+                      <p className="text-red-600 m-0">
+                        Username already exists
                       </p>
                     )}
                   </Field.Root>
@@ -226,9 +274,11 @@ const ConsumerSignUp = () => {
         borderRadius={"1rem"}
         bg="linear-gradient(to right, rgba(17, 49, 46, 1), rgba(17, 49, 46, .8))"
       >
-        <Text color={'white'}>Account created succesfully!</Text>
-        <Link href={"../api/auth/signin"}>
-          <Button p={"0 2rem"} bg={"#09734E"}>Login</Button>
+        <Text color={"white"}>Account created succesfully!</Text>
+        <Link href={"../login"}>
+          <Button p={"0 2rem"} bg={"#09734E"}>
+            Login
+          </Button>
         </Link>
       </Box>
     </>

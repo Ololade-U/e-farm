@@ -1,8 +1,11 @@
 import React from 'react'
+import ProductGrid from './ProductGrid'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+        <ProductGrid/>
+    </div>
   )
 }
 
