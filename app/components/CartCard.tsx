@@ -1,11 +1,11 @@
 import { Box, Flex, Heading, HStack, Stack, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Product } from "./ProductCard";
 import { CldImage } from "next-cloudinary";
 import { FaMinus } from "react-icons/fa6";
 import { IoIosAdd } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import useStoreQuery from "./store";
+import { Product } from "../hooks/useAllPosts";
 
 interface Props {
   product: Product;

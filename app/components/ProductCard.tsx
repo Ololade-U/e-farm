@@ -12,19 +12,11 @@ import React from "react";
 import { BsCartPlus } from "react-icons/bs";
 import useStoreQuery from "./store";
 import { BsCartCheck } from "react-icons/bs";
+import { Products } from "../hooks/usePosts";
 
-export interface Product {
-  id: string;
-  description: string;
-  type: string;
-  amount: number;
-  quantity: number;
-  status: string;
-  img: string;
-}
 
 interface Prop {
-  product: Product;
+  product: Products;
 }
 
 const ProductCard = ({ product }: Prop) => {

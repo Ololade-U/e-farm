@@ -25,7 +25,6 @@ import { LuBadgeDollarSign } from "react-icons/lu";
 import { IoMdHelpCircle } from "react-icons/io";
 import useUserSession from "@/app/hooks/useUserSession";
 import useStoreQuery from "@/app/components/store";
-import Link from "next/link";
 import { CiLogout } from "react-icons/ci";
 import z from "zod";
 import { FieldValues, useForm } from "react-hook-form";
@@ -63,13 +62,13 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const FarmerHomePage = ({ children }: Props) => {
-   const handleSignOut = () => {
-      signOut({ 
-        callbackUrl: '/', // <-- Specify your custom redirect path here
-        redirect: true // Ensure redirection is enabled (it is by default)
-      });
-    };
-  const [publicId, setPublicId] = useState("");
+  const handleSignOut = () => {
+    signOut({
+      callbackUrl: "/", // <-- Specify your custom redirect path here
+      redirect: true, // Ensure redirection is enabled (it is by default)
+    });
+  };
+  const [publicId] = useState("");
   const [upload, setUpload] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -90,7 +89,7 @@ const FarmerHomePage = ({ children }: Props) => {
   const userId = useStoreQuery((s) => s.userId);
   const user = useUserSession();
   const onSubmit = async (data: FieldValues) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await fetch(`../api/posts/${userId}`, {
         method: "POST",
@@ -111,10 +110,8 @@ const FarmerHomePage = ({ children }: Props) => {
     } catch (err) {
       console.error("Fetch operation error:", err);
     }
-    setLoading(false)
+    setLoading(false);
   };
-
-  // const { posts } = usePost();
 
   return (
     <>
@@ -198,21 +195,21 @@ const FarmerHomePage = ({ children }: Props) => {
                 <Text fontSize={"1.1rem"}>Help</Text>
               </HStack>
             </Stack>
-              <Button
-                bg={"white"}
-                _hover={{ bg: "#B37F37", color: "white" }}
-                color={"black"}
-                w={"100%"}
-                fontSize={"1rem"}
-                p={"1.5rem 0"}
-                borderTop={"1px solid #dbd9d9"}
-                onClick={()=> handleSignOut()}
-              >
-                <HStack h={"100%"} alignItems={"center"}>
-                  <CiLogout />
-                  Sign Out
-                </HStack>
-              </Button>
+            <Button
+              bg={"white"}
+              _hover={{ bg: "#B37F37", color: "white" }}
+              color={"black"}
+              w={"100%"}
+              fontSize={"1rem"}
+              p={"1.5rem 0"}
+              borderTop={"1px solid #dbd9d9"}
+              onClick={() => handleSignOut()}
+            >
+              <HStack h={"100%"} alignItems={"center"}>
+                <CiLogout />
+                Sign Out
+              </HStack>
+            </Button>
           </Flex>
         </GridItem>
         <GridItem gridRow={"1/2"} gridColumn={"1/3"} bg={"#11312E"}>
@@ -387,13 +384,13 @@ const FarmerHomePage = ({ children }: Props) => {
                   <Field.Label>Image</Field.Label>
                   <CldUploadWidget
                     uploadPreset="rxzipppi"
-                    onSuccess={(result, widget) => {
+                    onSuccess={(result) => {
                       if (result.event !== "success")
                         console.log("upload failed");
                       const Info = result.info as CloudResult;
                       setValue("img", Info.public_id, {
-                        shouldValidate: true, // Optionally validate the new value immediately
-                        shouldDirty: true, // Mark the form as dirty
+                        shouldValidate: true,
+                        shouldDirty: true,
                       });
                     }}
                   >

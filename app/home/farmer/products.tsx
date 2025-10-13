@@ -12,11 +12,6 @@ const Products = () => {
   const newPosts = posts && [...posts];
   newPosts?.reverse();
   const setPostId = useStoreQuery((s) => s.setPostId);
-  const emptyText = `Welcome!
-
-It looks like this page is empty right now.
-
-To get started, please upload a product using the feature in your account dashboard. Once your product is uploaded, it will appear here for you to view, manage, or share.`;
   const onDelete = async (postId: string) => {
     try {
       await fetch(`../api/posts/${postId}`, {
@@ -33,11 +28,11 @@ To get started, please upload a product using the feature in your account dashbo
     <>
       {newPosts?.length == 0 ? (
         <EmptyPage>
-          <Text maxWidth={'70ch'} fontSize={'.8rem'} textAlign={'center'}>
-            Welcome! <br /> It looks like this page is empty right now. To get started,
-            please upload a product using the upload product feature on the top right.
-            Once your product is uploaded, it will appear here for you to view,
-            manage, or share.
+          <Text maxWidth={"70ch"} fontSize={".8rem"} textAlign={"center"}>
+            Welcome! <br /> It looks like this page is empty right now. To get
+            started, please upload a product using the upload product feature on
+            the top right. Once your product is uploaded, it will appear here
+            for you to view, manage, or share.
           </Text>
         </EmptyPage>
       ) : (

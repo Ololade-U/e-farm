@@ -1,12 +1,28 @@
+import { PostType, Status } from "@/app/generated/prisma";
 import prisma from "@/prisma/client";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
-interface Props {
-  params: { id: string };
+
+interface Products{
+    id : string,
+    userId : string,
+    description : string,
+    type : PostType,
+    amount : number,
+    quantity : number,
+    postedAt : Date,
+    status : Status,
+    img : string | null
 }
 
-export async function GET(request: NextRequest, { params: { id } }: Props) {
+type RouteContext = {
+    params: Promise<{ id: string }>;
+};
+
+
+
+export async function GET(request: NextRequest, context: RouteContext): Promise<NextResponse<Products[] | { error: string }>> {
+  const { id } = await context.params;
   const post = await prisma.post.findMany({
     where: { userId: id },
   });
@@ -14,22 +30,26 @@ export async function GET(request: NextRequest, { params: { id } }: Props) {
   return NextResponse.json(post);
 }
 
-export async function POST(request: NextRequest, { params: { id } }: Props) {
+export async function POST(request: NextRequest, context: RouteContext) : Promise<NextResponse<Products | { error: string }>> {
+  const { id : userId } = await context.params;
   try {
     const body = await request.json();
 
     const amountAsNumber = parseInt(body.amount); // Use parseFloat for currency/decimals
     const quantityAsNumber = parseInt(body.quantity);
 
+    const postType = body.type as PostType;
+    const statusType = body.status as Status;
+
     const newPost = await prisma.post.create({
       data: {
         description: body.description,
         amount: amountAsNumber,
-        status: body.status,
-        type: body.type,
-        img : body.img,
+        status: statusType,
+        type: postType,
+        img: body.img,
         quantity: quantityAsNumber,
-        userId: id,
+        userId: userId,
       },
     });
 
@@ -50,8 +70,9 @@ export async function POST(request: NextRequest, { params: { id } }: Props) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params: { id } }: Props) {
-  const post = prisma.post.findUnique({
+export async function DELETE(request: NextRequest, context: RouteContext) : Promise<NextResponse<string | { error: string }>> {
+  const { id } = await context.params;
+  const post = await prisma.post.findUnique({
     where: { id: id },
   });
 

@@ -1,4 +1,4 @@
-import Error from "next/error";
+
 
 import { useState, useEffect } from "react";
 
@@ -9,7 +9,6 @@ export interface Product {
   type: string;
   amount: number;
   quantity: number;
-  onSale: number;
   postedAt: number;
   status: string;
   img: string;
@@ -31,7 +30,7 @@ const useAllPost = () => {
         });
         if (!response.ok) {
           const errorData = await response.text();
-          console.error("API Error Response HTML:", errorData)
+          console.error("API Error Response HTML:", errorData);
         }
 
         const data = await response.json();

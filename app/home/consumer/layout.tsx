@@ -11,7 +11,7 @@ interface Props {
   children: ReactNode;
 }
 
-const layout = ({ children }: Props) => {
+const Layout = ({ children }: Props) => {
   const cart = useStoreQuery((s) => s.cart);
   return (
     <Stack>
@@ -52,7 +52,6 @@ const layout = ({ children }: Props) => {
         >
           <Box pos={"relative"}>
             <IoPerson fill="white" size={"1.5rem"} cursor={"pointer"} />
-            
           </Box>
           <Link href={"./consumer/cart"}>
             <Box pos={"relative"} right={0}>
@@ -78,4 +77,4 @@ const layout = ({ children }: Props) => {
   );
 };
 
-export default layout;
+export default Layout;

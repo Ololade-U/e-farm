@@ -4,7 +4,7 @@ import useStoreQuery from "../../../components/store";
 import EmptyPage from "../../../components/EmptyPage";
 import CartCard from "../../../components/CartCard";
 import { Box } from "@chakra-ui/react";
-import useAllPost from "@/app/hooks/useAllPosts";
+
 
 const CartPage = () => {
   const posts = useStoreQuery((s)=> s.products)

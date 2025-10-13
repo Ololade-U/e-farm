@@ -1,6 +1,6 @@
 import { Session } from "inspector/promises";
 import { create } from "zustand";
-import { Product } from "./ProductCard";
+import { Products } from "../hooks/usePosts";
 
 
 interface StoreQuery{
@@ -13,7 +13,7 @@ interface StoreQuery{
     main : string;
     postId : string;
     cart : string[];
-    products : Product[] | null
+    products : Products[] | null
     setOpen : (value : boolean)=> void;
     setFixed : (value : boolean) => void;
     setSession : (value : Session | null)=> void
@@ -24,7 +24,7 @@ interface StoreQuery{
     setPostId : (value : string) => void
     addToCart : (value : string) => void
     removeCart : (value : string) => void
-    setProducts : (product : Product[] | null) => void
+    setProducts : (product : Products[] | null) => void
 }
 
 const useStoreQuery = create<StoreQuery>((set)=>({

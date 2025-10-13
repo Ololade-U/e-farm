@@ -4,14 +4,13 @@ import useStoreQuery from "../components/store";
 
 import { useState, useEffect } from 'react';
 
-interface Props{
+export interface Products{
     id : string,
     userId : string,
     description : string,
     type : string,
     amount : number,
     quantity : number,
-    onSale : number,
     postedAt : number,
     status : string,
     img : string
@@ -19,7 +18,7 @@ interface Props{
 
 const usePost = () => { 
     const userId = useStoreQuery((s) => s.userId); 
-    const [posts, setPosts] = useState<Props[] | null>(null);
+    const [posts, setPosts] = useState<Products[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const postId = useStoreQuery((s)=> s.postId)
