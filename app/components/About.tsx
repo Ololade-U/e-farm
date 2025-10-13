@@ -54,7 +54,7 @@ const About = () => {
             We ensure our farmers keep the majority of the profit—significantly more than they earn through conventional routes. This empowers them to invest back into sustainable practices, their land, and their families. Buying from us directly fuels the growth of local agriculture.
           </Text>
         </Box>
-        <Image src={"/about3.jpg"} w={"35%"} />
+        <Image alt="an image" src={"/about3.jpg"} w={"35%"} />
       </HStack>
     </Box>
   );

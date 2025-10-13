@@ -1,4 +1,4 @@
-import { Box, Center, Heading, HStack, Stack, Text } from '@chakra-ui/react'
+import { Box, Heading, HStack, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 
 const ROI = () => {

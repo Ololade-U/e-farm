@@ -68,7 +68,7 @@ const useStoreQuery = create<StoreQuery>((set)=>({
     removeCart : (value) => set((store)=> ({
         cart : store.cart.filter((id)=> id !== value)
     })),
-    setProducts : (product) => set((store)=>({
+    setProducts : (product) => set(()=>({
         products : product
     }))
 }))

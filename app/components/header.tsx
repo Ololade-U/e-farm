@@ -1,6 +1,6 @@
 "use client";
 import { Box, Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { LuChevronDown } from "react-icons/lu";
 import { IoIosMenu } from "react-icons/io";
 import useStoreQuery from "./store";

@@ -6,7 +6,7 @@ const Register = () => {
   return (
     <Flex height={'85vh'} justify={'center'} gap={'2rem'} p={'2rem 0'}>
         <Stack w={'40%'} alignItems={'center'} gap={'1rem'}>
-            <Image src={'/farmer_reg.webp'} w={'80%'}/>
+            <Image src={'/farmer_reg.webp'} w={'80%'} alt='an image'/>
             <Link href={"../register/farmer"}>
             <Button
               bg={"#B37F37"}
@@ -22,7 +22,7 @@ const Register = () => {
           <Text>Start using Local Line for your sales channels</Text>
         </Stack>
         <Stack w={'40%'} alignItems={'center'} gap={'1rem'}>
-            <Image src={'/farmer_reg.webp'} w={'80%'}/>
+            <Image src={'/farmer_reg.webp'} w={'80%'} alt='an image'/>
             <Link href={"../register/consumer"}>
             <Button
               border={'1px solid #11312E'}

@@ -34,6 +34,7 @@ const ProductCard = ({ product }: Prop) => {
             pos={"relative"}
             objectFit={"contain"}
             w={"100%"}
+            alt="not found"
           />
         )}
         <Flex pos={'relative'} h={'100%'} justify={"flex-end"} alignItems={"flex-start"}>

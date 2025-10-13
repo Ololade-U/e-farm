@@ -20,7 +20,7 @@ import { useSession } from "next-auth/react";
 
 const Landing = () => {
 
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const users = [1, 2, 3, 4, 5];
   let [userImageId, setUserImageId] = useState(1);
   const isOpen = useStoreQuery((s) => s.isOpen);
