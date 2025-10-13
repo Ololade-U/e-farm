@@ -1,9 +1,8 @@
 import prisma from "@/prisma/client";
-import { Props } from "next/script";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const post = await prisma.post.findMany();
 
   return NextResponse.json(post);

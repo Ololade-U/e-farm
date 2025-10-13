@@ -1,10 +1,9 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import useStoreQuery from "@/app/components/store";
 import { error } from "console";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const users = await prisma.user.findMany();
   return NextResponse.json(users);
 }

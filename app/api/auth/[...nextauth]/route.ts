@@ -1,4 +1,4 @@
-import NextAuth, { getServerSession, NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/prisma/client";
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
           placeholder: "Enter your password",
         },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null;
 
         const user = await prisma.user.findUnique({
@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
     strategy : 'jwt'
   },
   callbacks : {
-    async jwt({token, user, profile, account}){
+    async jwt({token, user}){
       if(user){
         token.role = (user as any).role;
         token.id = user.id

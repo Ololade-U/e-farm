@@ -18,9 +18,11 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
-      "app/generated/",
+      "./app/generated/",
     ],
-     ignoreDuringBuilds: true,
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+    },
   },
 ];
 

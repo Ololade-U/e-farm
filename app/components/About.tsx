@@ -27,11 +27,11 @@ const About = () => {
             farms.
           </Text>
         </Box>
-        <Image src={"/about.jpg"} w={"35%"} />
+        <Image alt="an image" src={"/about.jpg"} w={"35%"} />
       </HStack>
 
       <HStack justify={"center"} gap={"4.5rem"} mb={"5rem"}>
-        <Image src={"/about2.jpg"} w={"35%"} />
+        <Image alt="an image" src={"/about2.jpg"} w={"35%"} />
         <Box w={"40%"}>
           <Heading color={"#11312E"} fontSize={"3xl"} mb={"1rem"}>
             Unbeatable Freshness and Quality
