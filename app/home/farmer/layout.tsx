@@ -32,6 +32,7 @@ import { IoClose } from "react-icons/io5";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CldUploadWidget } from "next-cloudinary";
 import { signOut } from "next-auth/react";
+import { MdDashboardCustomize } from "react-icons/md";
 
 interface Props {
   children: ReactNode;
@@ -140,6 +141,18 @@ const FarmerHomePage = ({ children }: Props) => {
               >{`Hi ${user?.username}`}</Heading>
               <HStack
                 p={"1rem"}
+                bg={main === "Dashboard" ? "#B37F37" : "white"}
+                color={main === "Dashboard" ? "white" : "black"}
+                _hover={{ bg: "#B37F37", color: "white" }}
+                cursor={"pointer"}
+                borderBottom={"1px solid #dbd9d9"}
+                onClick={() => setMain("Dashboard")}
+              >
+                <MdDashboardCustomize size={"1.3rem"} />
+                <Text fontSize={"1.1rem"}>Dashboard</Text>
+              </HStack>
+              <HStack
+                p={"1rem"}
                 bg={main === "My Products" ? "#B37F37" : "white"}
                 color={main === "My Products" ? "white" : "black"}
                 _hover={{ bg: "#B37F37", color: "white" }}
@@ -152,7 +165,8 @@ const FarmerHomePage = ({ children }: Props) => {
               </HStack>
               <HStack
                 p={"1rem"}
-                bg={"white"}
+                bg={main === "Manage" ? "#B37F37" : "white"}
+                color={main === "Manage" ? "white" : "black"}
                 _hover={{ bg: "#B37F37", color: "white" }}
                 cursor={"pointer"}
                 borderBottom={"1px solid #dbd9d9"}
@@ -163,7 +177,8 @@ const FarmerHomePage = ({ children }: Props) => {
               </HStack>
               <HStack
                 p={"1rem"}
-                bg={"white"}
+                bg={main === "Profile" ? "#B37F37" : "white"}
+                color={main === "Profile" ? "white" : "black"}
                 _hover={{ bg: "#B37F37", color: "white" }}
                 cursor={"pointer"}
                 borderBottom={"1px solid #dbd9d9"}
@@ -174,7 +189,8 @@ const FarmerHomePage = ({ children }: Props) => {
               </HStack>
               <HStack
                 p={"1rem"}
-                bg={"white"}
+                bg={main === "Sales" ? "#B37F37" : "white"}
+                color={main === "Sales" ? "white" : "black"}
                 _hover={{ bg: "#B37F37", color: "white" }}
                 cursor={"pointer"}
                 borderBottom={"1px solid #dbd9d9"}
@@ -185,7 +201,8 @@ const FarmerHomePage = ({ children }: Props) => {
               </HStack>
               <HStack
                 p={"1rem"}
-                bg={"white"}
+                bg={main === "Help" ? "#B37F37" : "white"}
+                color={main === "Help" ? "white" : "black"}
                 _hover={{ bg: "#B37F37", color: "white" }}
                 cursor={"pointer"}
                 borderBottom={"1px solid #dbd9d9"}

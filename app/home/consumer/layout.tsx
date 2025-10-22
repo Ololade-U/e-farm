@@ -6,6 +6,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import useStoreQuery from "@/app/components/store";
 import Link from "next/link";
+import SignOutButton from "@/app/components/Logout";
 
 interface Props {
   children: ReactNode;
@@ -14,7 +15,7 @@ interface Props {
 const Layout = ({ children }: Props) => {
   const cart = useStoreQuery((s) => s.cart);
   return (
-    <Stack>
+    <Stack overflowY={'hidden'} h={'100vh'}>
       <HStack
         justifyContent={"space-between"}
         h={"15vh"}
@@ -30,9 +31,11 @@ const Layout = ({ children }: Props) => {
           <Box hideFrom={"md"}>
             <RxHamburgerMenu size={"1.5rem"} />
           </Box>
-          <Box zIndex={"2000"}>
-            <Image src={`/logo.webp`} alt="" w={"10rem"} />
-          </Box>
+          <Link href={"/home/consumer"}>
+            <Box zIndex={"2000"}>
+              <Image src={`/logo.webp`} alt="" w={"10rem"} />
+            </Box>
+          </Link>
         </HStack>
 
         <form className="nav-form" action="">
@@ -70,9 +73,10 @@ const Layout = ({ children }: Props) => {
               </Text>
             </Box>
           </Link>
+          <SignOutButton />
         </HStack>
       </HStack>
-      <Box mt={"17vh"}>{children}</Box>
+      <Box overflowY={'auto'} mt={"17vh"}>{children}</Box>
     </Stack>
   );
 };
