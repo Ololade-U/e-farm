@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 const schema = z.object({
   email: z.email(),
-  password: z.string().min(6),
+  password: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -42,6 +42,7 @@ const Login = () => {
 
     if (result?.error) {
       alert("Incorrect login info");
+      setLoading(false);
       return;
     }
 
@@ -53,7 +54,6 @@ const Login = () => {
     } else if (userRole === "BUYER") {
       router.push("../home/consumer");
     } else {
-      // Fallback if role is undefined or another value
       router.push("/");
     }
     setLoading(false);
@@ -98,9 +98,6 @@ const Login = () => {
                   placeholder="Enter your email"
                   p={"0 .5rem"}
                 />
-                {errors.email && (
-                  <p className="text-red-600 m-0">{errors.email.message}</p>
-                )}
               </Field.Root>
 
               <Field.Root mb={"2rem"}>
@@ -112,9 +109,6 @@ const Login = () => {
                   placeholder="Enter your password"
                   p={"0 .5rem"}
                 />
-                {errors.password && (
-                  <p className="text-red-600 m-0">{errors.password?.message}</p>
-                )}
               </Field.Root>
             </Fieldset.Content>
 

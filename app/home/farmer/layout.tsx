@@ -52,7 +52,7 @@ const ProductType = z.enum([
 const Status = z.enum(["OnSale", "SoldOut", "Inactive"]);
 
 const schema = z.object({
-  description: z.string().min(3),
+  description: z.string().min(3, { message: "Enter a valid description" }),
   type: ProductType,
   amount: z.number().min(1),
   quantity: z.number().min(1),

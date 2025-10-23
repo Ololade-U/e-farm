@@ -49,8 +49,23 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  pages :{
+    signIn : '../../../login',
+  },
   session :{
-    strategy : 'jwt'
+    strategy : 'jwt',
+    maxAge : 5 *60, // 5 minutes
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
   },
   callbacks : {
     async jwt({token, user}){

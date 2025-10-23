@@ -69,7 +69,7 @@ const Landing = () => {
           >
             Trusted by the worlds best farms, grocers, and restaurants, Local
             Line is the leading e-commerce platform for buying & selling local
-            food.
+            food items.
           </Text>
           <Flex pl={"1rem"} alignItems={"center"}>
             {users.map((el) => (
