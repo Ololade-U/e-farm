@@ -10,7 +10,9 @@ import React from "react";
 
 const ProductGrid = () => {
   const Skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  const { posts, isLoading } = useAllPost();
+  const { posts : gotPosts, isLoading } = useAllPost();
+  const posts = gotPosts && [...gotPosts];
+  posts?.reverse();
   const setProducts = useStoreQuery((s)=> s.setProducts)
   setProducts(posts!)
   return (
