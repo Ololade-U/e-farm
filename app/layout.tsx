@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
+import { Red_Hat_Display } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./components/provider/provider";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
+
+// red hat display 
+const hat = Red_Hat_Display({
+  variable: "--font-red-hat-display",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Local Line",
@@ -27,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={`${hat.variable}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

@@ -4,6 +4,10 @@ import { NextResponse } from "next/server";
 
 const LOGIN_PATH = "/login";
 const ROOT_PATH = "/";
+const REGISTER_PATH = "/register";
+const FARMER_REGISTER_PATH = "/register/farmer";
+const CONSUMER_REGISTER_PATH = "/register/consumer";
+
 
 export default withAuth(
   // The primary logic for redirection and role checking
@@ -17,6 +21,8 @@ export default withAuth(
       DASHBOARD_PATH = "/home/farmer";
     } else if (userRole === "BUYER") {
       DASHBOARD_PATH = "/home/consumer";
+    } else if (token && !userRole) {
+      DASHBOARD_PATH = REGISTER_PATH;
     }
 
     if (token) {
@@ -44,7 +50,10 @@ export default withAuth(
       authorized: ({ token, req }) => {
         if (
           req.nextUrl.pathname === LOGIN_PATH ||
-          req.nextUrl.pathname === ROOT_PATH
+          req.nextUrl.pathname === ROOT_PATH ||
+          req.nextUrl.pathname === REGISTER_PATH ||
+          req.nextUrl.pathname === FARMER_REGISTER_PATH ||
+          req.nextUrl.pathname === CONSUMER_REGISTER_PATH 
         ) {
           return true;
         }
@@ -61,11 +70,12 @@ export default withAuth(
 export const config = {
   // Match the root, login page, and all /home paths for complete control
   matcher: [
-    "/home",
-    "/home/farmer",
-    "/home/consumer",
+    '/home/:path*',
     '/',
     '/login',
+    '/register',
+    '/register/farmer',
+    '/register/consumer',
     "/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$|.*\\.webp$).*)",
   ],
 };
