@@ -1,13 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Red_Hat_Display } from "next/font/google";
+import { Baskervville, Red_Hat_Display } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./components/provider/provider";
 
-
-// red hat display 
-const hat = Red_Hat_Display({
+const red = Red_Hat_Display({
   variable: "--font-red-hat-display",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+export const basker = Baskervville({
+  variable: "--font-basker",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${hat.variable}`}>
+      <body className={`${basker.className}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

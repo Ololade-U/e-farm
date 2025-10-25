@@ -33,3 +33,14 @@ body{
         right: 0;
     }
 }
+
+
+
+/* Apply the font variable to all headings (if not using Tailwind) */
+/* h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-basker), serif;
+} */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-red-hat-display), serif;
+}

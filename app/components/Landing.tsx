@@ -15,6 +15,7 @@ import { FaStar } from "react-icons/fa";
 import useStoreQuery from "./store";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { basker } from "../layout";
 
 
 
@@ -58,7 +59,8 @@ const Landing = () => {
             lineHeight={1}
             color={"white"}
             fontSize={{ lgTo2xl: "6xl", mdToLg: "5xl", mdDown: "3xl" }}
-          >
+            className={'--font-basker'}
+            fontWeight={"700"}>
             Farm-to-table made simple.
           </Heading>
           <Text
