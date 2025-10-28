@@ -5,7 +5,6 @@ import prisma from "@/prisma/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -32,15 +31,13 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        
-
         if (!user) return null;
 
         const passwordMatch = await bcrypt.compare(
           credentials.password,
           user.hashedPassword!
         );
-        
+
         return passwordMatch ? user : null;
       },
     }),
@@ -49,12 +46,12 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-  pages :{
-    signIn : '../../../login',
+  pages: {
+    signIn: "../../../login",
   },
-  session :{
-    strategy : 'jwt',
-    maxAge : 5 *60, // 5 minutes
+  session: {
+    strategy: "jwt",
+    maxAge: 25 * 60, // 25 minutes
   },
   cookies: {
     sessionToken: {
@@ -67,20 +64,19 @@ export const authOptions: NextAuthOptions = {
       },
     },
   },
-  callbacks : {
-    async jwt({token, user}){
-      if(user){
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
         token.role = (user as any).role;
-        token.id = user.id
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }) {
-      if(session.user){
+      if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as string; 
+        session.user.role = token.role as string;
       }
-       
 
       return session;
     },

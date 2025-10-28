@@ -1,4 +1,4 @@
-import { PostType, Status } from "@/app/generated/prisma";
+import { PostType, Status, MeasureUnit } from "@/app/generated/prisma";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -50,6 +50,7 @@ export async function POST(request: NextRequest, context: RouteContext) : Promis
         img: body.img,
         quantity: quantityAsNumber,
         userId: userId,
+        unit: body.unit as MeasureUnit,
       },
     });
 
@@ -62,7 +63,6 @@ export async function POST(request: NextRequest, context: RouteContext) : Promis
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
     console.error("Prisma Post Creation Error:", error);
-    // Respond with a general error message for the client
     return NextResponse.json(
       { error: "Internal Server Error during post creation." },
       { status: 500 }

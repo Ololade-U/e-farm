@@ -1,32 +1,29 @@
+import { useEffect, useState } from "react";
+import useUserSession from "./useUserSession";
+import useStoreQuery from "../components/store";
 
-
-import { useState, useEffect } from "react";
-
-export interface Product {
+interface Cart {
   id: string;
   userId: string;
-  description: string;
-  type: string;
-  amount: number;
-  quantity: number;
-  postedAt: number;
-  status: string;
-  img: string;
-  unit : string
+  postId: string;
 }
 
-const useAllPost = () => {
-  const [posts, setPosts] = useState<Product[] | null>(null);
+const useCart = () => {
+  const [cart, setCart] = useState<Cart[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const userId = useStoreQuery((s)=> s.userId)
+  console.log(userId)
+  const user = useUserSession();
+  console.log(user?.id);
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchCart = async () => {
       setIsLoading(true);
       setError(null);
+      
 
       try {
-        const response = await fetch(`../api/posts`, {
+        const response = await fetch(`../api/cart/${user?.id}`, {
           method: "GET",
         });
         if (!response.ok) {
@@ -35,7 +32,7 @@ const useAllPost = () => {
         }
 
         const data = await response.json();
-        setPosts(data);
+        setCart(data);
       } catch (err) {
         console.error("Fetch operation error:", err);
       } finally {
@@ -43,9 +40,9 @@ const useAllPost = () => {
       }
     };
 
-    fetchPosts();
+    fetchCart();
   }, []);
-  return { posts, isLoading, error };
+  return { cart, isLoading, error };
 };
 
-export default useAllPost;
+export default useCart;

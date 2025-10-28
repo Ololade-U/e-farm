@@ -31,6 +31,7 @@ model User {
   sessions       Session[]
   Authenticator  Authenticator[]
   Post           Post[]
+  cart           Cart[]
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 }
@@ -104,9 +105,23 @@ model Post {
   amount      Int
   quantity    Int      @default(1)
   status      Status
+  unit        MeasureUnit?
   img         String?
   postedAt    DateTime @default(now())
   user        User?     @relation(fields: [userId], references: [id])
+  cart        Cart[]
+}
+
+model Cart{
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  quantity  Int      @default(1)
+  addedAt   DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
 }
 
 enum Role {
@@ -120,6 +135,15 @@ enum PostType {
   Grain
   Livestock
   Dairy
+}
+
+enum MeasureUnit {
+  Kg
+  Litre
+  Unit
+  Crate
+  Bag
+  Bunch
 }
 
 enum Status {

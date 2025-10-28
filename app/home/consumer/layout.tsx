@@ -7,12 +7,15 @@ import { FaCartShopping } from "react-icons/fa6";
 import useStoreQuery from "@/app/components/store";
 import Link from "next/link";
 import SignOutButton from "@/app/components/Logout";
+import { useStore } from "zustand";
+
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout = ({ children }: Props) => {
+  const setSearchParam = useStoreQuery((s => s.setSeacrhParam));
   const cart = useStoreQuery((s) => s.cart);
   return (
     <Stack overflowY={'hidden'} h={'100vh'}>
@@ -45,6 +48,7 @@ const Layout = ({ children }: Props) => {
             border={"1px solid #e3e3e3"}
             borderRadius={".7rem"}
             placeholder="Search"
+            onChange={(e)=>setSearchParam(e.currentTarget.value)}
           />
         </form>
         <HStack

@@ -17,10 +17,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { basker } from "../layout";
 
-
-
 const Landing = () => {
-
   const { status } = useSession();
   const users = [1, 2, 3, 4, 5];
   let [userImageId, setUserImageId] = useState(1);
@@ -30,7 +27,6 @@ const Landing = () => {
     const intervalId = setInterval(() => {
       setUserImageId(userImageId < 6 ? userImageId + 1 : (userImageId = 1));
     }, 3000);
-
 
     return () => {
       clearInterval(intervalId);
@@ -59,8 +55,9 @@ const Landing = () => {
             lineHeight={1}
             color={"white"}
             fontSize={{ lgTo2xl: "6xl", mdToLg: "5xl", mdDown: "3xl" }}
-            className={'--font-basker'}
-            fontWeight={"700"}>
+            className={"--font-basker"}
+            fontWeight={"700"}
+          >
             Farm-to-table made simple.
           </Heading>
           <Text
@@ -122,15 +119,15 @@ const Landing = () => {
               </Link>
             )}
             {status === "authenticated" && (
-              <Link href={'../home/farmer'}>
-              <Button
-                bg={"#B37F37"}
-                p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
-                zIndex={"2000"}
-                fontSize={{ mdTo2xl: "xl" }}
-              >
-                Start Selling
-              </Button>
+              <Link href={"../home/farmer"}>
+                <Button
+                  bg={"#B37F37"}
+                  p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
+                  zIndex={"2000"}
+                  fontSize={{ mdTo2xl: "xl" }}
+                >
+                  Start Selling
+                </Button>
               </Link>
             )}
           </HStack>

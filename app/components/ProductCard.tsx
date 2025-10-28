@@ -1,24 +1,63 @@
 import { Card, Flex, Box, Heading, Image, Text } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
-import React from "react";
+import React, { use } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import useStoreQuery from "./store";
 import { BsCartCheck } from "react-icons/bs";
 import { Products } from "../hooks/usePosts";
+import useUserSession from "../hooks/useUserSession";
 
 interface Prop {
   product: Products;
 }
 
 const formatAmount = (amount: number) => {
-  return new Intl.NumberFormat('en-NG', {
-    style: 'currency',
-    currency: 'NGN',
-    minimumFractionDigits: 2, // Ensures two decimal places (e.g., .00)
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 2,
   }).format(amount);
 };
 
 const ProductCard = ({ product }: Prop) => {
+  const user = useUserSession();
+  const productId = { productId: product.id };
+  const userId = { userId: user?.id };
+  // const onAddToCart = async () => {
+  //   addToCart(product.id);
+  //   try {
+  //     const response = await fetch(`../api/cart/${user?.id}`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(productId),
+  //     });
+  //     if (response.ok) {
+  //     } else {
+  //       const errorData = await response.json();
+  //       if (errorData && errorData.error) {
+  //         const serverErrorMessage = errorData.error;
+  //         throw new Error(serverErrorMessage);
+  //       } else {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error("Fetch operation error:", err);
+  //   }
+  // };
+  // const onDelete = async () => {
+  //   removeCart(product.id);
+  //   try {
+  //     await fetch(`../api/cart/${product.id}`, {
+  //       method: "DELETE",
+  //       body: JSON.stringify(userId),
+  //     });
+  //   } catch (err) {
+  //     console.error("Fetch operation error:", err);
+  //   }
+  // };
   const cart = useStoreQuery((s) => s.cart);
   const addToCart = useStoreQuery((s) => s.addToCart);
   const removeCart = useStoreQuery((s) => s.removeCart);
@@ -72,9 +111,14 @@ const ProductCard = ({ product }: Prop) => {
         </Flex>
         <Card.Body p={0}>
           <Heading fontSize={"1xl"}>{product.description}</Heading>
-          <Text fontSize={"3xl"} fontWeight={"bold"}>
-            {formattedAmount}
-          </Text>
+          <Box display={"flex"} alignItems={"flex-end"}>
+            <Text fontSize={"3xl"} fontWeight={"bold"}>
+              {formattedAmount}
+            </Text>
+            <Text fontWeight={"light"} fontSize={"1rem"}>
+              /{product.unit}
+            </Text>
+          </Box>
         </Card.Body>
       </Card.Root>
     </>

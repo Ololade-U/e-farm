@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import EmptyPage from "@/app/components/EmptyPage";
 import ProductCard from "@/app/components/ProductCard";
@@ -6,18 +6,27 @@ import ProductSkeleton from "@/app/components/ProductSkeleton";
 import useStoreQuery from "@/app/components/store";
 import useAllPost from "@/app/hooks/useAllPosts";
 import { SimpleGrid } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const ProductGrid = () => {
   const Skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  const { posts : gotPosts, isLoading } = useAllPost();
+  const { posts: gotPosts, isLoading } = useAllPost();
+  const searchParam = useStoreQuery((s) => s.searchParam);
+  console.log(searchParam);
   const posts = gotPosts && [...gotPosts];
   posts?.reverse();
-  const setProducts = useStoreQuery((s)=> s.setProducts)
-  setProducts(posts!)
+  const filteredPosts = posts?.filter((post) =>
+    post.description.toLowerCase().includes(searchParam.toLowerCase())
+  );
+  const setProducts = useStoreQuery((s) => s.setProducts);
+  useEffect(() => {
+    setProducts(posts!);
+  }, [gotPosts]);
   return (
     <>
-      {posts?.length == 0 && <EmptyPage>The Page is currently empty, try reloading!</EmptyPage>}
+      {posts?.length == 0 && (
+        <EmptyPage>The Page is currently empty, try reloading!</EmptyPage>
+      )}
 
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xlTo2xl: 4 }}
@@ -26,7 +35,11 @@ const ProductGrid = () => {
       >
         {isLoading &&
           Skeleton.map((skeleton) => <ProductSkeleton key={skeleton} />)}
-        {posts?.map((product) => (
+        {searchParam
+          ? filteredPosts?.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          : posts?.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
       </SimpleGrid>

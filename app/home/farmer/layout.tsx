@@ -49,6 +49,8 @@ const ProductType = z.enum([
   "Livestock",
   "Dairy",
 ]);
+const MeasureUnit = z.enum(["Kg", "Litre", "Unit", "Crate", "Bag", "Bunch"]);
+
 const Status = z.enum(["OnSale", "SoldOut", "Inactive"]);
 
 const schema = z.object({
@@ -58,6 +60,7 @@ const schema = z.object({
   quantity: z.number().min(1),
   status: Status,
   img: z.string().min(3),
+  unit: MeasureUnit,
 });
 
 type FormData = z.infer<typeof schema>;
@@ -283,6 +286,7 @@ const FarmerHomePage = ({ children }: Props) => {
         zIndex={"100"}
         bg={"rgba(0, 0, 0, .3)"}
         backdropFilter={"blur(5px)"}
+        overflowY={'auto'}
       >
         <Stack
           border={"1px solid black"}
@@ -291,6 +295,7 @@ const FarmerHomePage = ({ children }: Props) => {
           p={"2rem 2rem"}
           bg={"white"}
           pos={"relative"}
+          mt={'3rem'}
         >
           <Box
             cursor={"pointer"}
@@ -340,6 +345,29 @@ const FarmerHomePage = ({ children }: Props) => {
                           "Livestock",
                           "Dairy",
                         ]}
+                      >
+                        {(item) => (
+                          <option key={item} value={item}>
+                            {item}
+                          </option>
+                        )}
+                      </For>
+                    </NativeSelect.Field>
+                    <NativeSelect.Indicator />
+                  </NativeSelect.Root>
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label>Measure Unit</Field.Label>
+                  <NativeSelect.Root>
+                    <NativeSelect.Field
+                      {...register("unit")}
+                      name="unit"
+                      placeholder="Select Measurement Unit"
+                      p={"0 .5rem"}
+                    >
+                      <For
+                        each={["Kg", "Litre", "Unit", "Crate", "Bag", "Bunch"]}
                       >
                         {(item) => (
                           <option key={item} value={item}>

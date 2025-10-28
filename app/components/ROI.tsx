@@ -21,7 +21,7 @@ const ROI = () => {
             </Stack>
             <Stack gap={'3.5rem'} justify={'flex-end'} align={'flex-start'} borderLeft={'.2rem solid #145841'} p={'5rem 0 1rem .5rem'}>
                 <Heading fontSize={'8xl'} color={'#11312E'}>14+</Heading>
-                <Text color={'#11312E'} pl={'.5rem'}>Countries</Text>
+                <Text color={'#11312E'} pl={'.5rem'}>States</Text>
             </Stack>
         </HStack>
     </Box>

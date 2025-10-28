@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, HStack, Stack, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CldImage } from "next-cloudinary";
 import { FaMinus } from "react-icons/fa6";
 import { IoIosAdd } from "react-icons/io";
@@ -13,12 +13,16 @@ interface Props {
 
 const CartCard = ({ product }: Props) => {
   const [quantity, setQuantity] = useState(1);
+  const setQuantities = useStoreQuery((s)=> s.setQuantity);
+  useEffect(() => { 
+    setQuantities({productId: product.id, quantity: quantity});
+  }, [quantity]);
   const removeCart = useStoreQuery((s) => s.removeCart);
   return (
     <Box
       display={"flex"}
       gap={"1rem"}
-      w={"60%"}
+      w={"100%"}
       bg={"white"}
       p={"1rem"}
       borderRadius={".6rem"}

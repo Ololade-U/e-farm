@@ -14,6 +14,7 @@ export interface Products{
     postedAt : number,
     status : string,
     img : string
+    unit : string
 }
 
 const usePost = () => { 

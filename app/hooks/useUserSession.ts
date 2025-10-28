@@ -29,12 +29,9 @@ const useUserSession = () => {
         
         const fetchAndSetUserId = async () => {
             try {
-                // 1. Fetch the user object from your API (using the user's email)
                 const response = await fetch(`../api/users/${userEmail}`, {
                     method: "GET",
                 });
-
-                // 2. Handle API errors (4xx or 5xx status codes)
                 if (!response.ok) {
                     const errorData = await response.json();
                     console.error("API Error:", errorData.error);
@@ -42,10 +39,8 @@ const useUserSession = () => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                // 3. Parse the JSON data
                 const userObject = await response.json();
                 setUser(userObject)
-                // 4. Update the global store with the retrieved user ID
                 setUserId(userObject.id);
 
             } catch (error) {
