@@ -8,7 +8,6 @@ const REGISTER_PATH = "/register";
 const FARMER_REGISTER_PATH = "/register/farmer";
 const CONSUMER_REGISTER_PATH = "/register/consumer";
 
-
 export default withAuth(
   // The primary logic for redirection and role checking
   function middleware(req) {
@@ -53,7 +52,7 @@ export default withAuth(
           req.nextUrl.pathname === ROOT_PATH ||
           req.nextUrl.pathname === REGISTER_PATH ||
           req.nextUrl.pathname === FARMER_REGISTER_PATH ||
-          req.nextUrl.pathname === CONSUMER_REGISTER_PATH 
+          req.nextUrl.pathname === CONSUMER_REGISTER_PATH
         ) {
           return true;
         }
@@ -70,12 +69,12 @@ export default withAuth(
 export const config = {
   // Match the root, login page, and all /home paths for complete control
   matcher: [
-    '/home/:path*',
-    '/',
-    '/login',
-    '/register',
-    '/register/farmer',
-    '/register/consumer',
+    "/home/:path*",
+    "/",
+    "/login",
+    "/register",
+    "/register/farmer",
+    "/register/consumer",
     "/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$|.*\\.webp$).*)",
   ],
 };

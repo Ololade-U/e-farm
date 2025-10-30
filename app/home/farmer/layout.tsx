@@ -33,6 +33,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CldUploadWidget } from "next-cloudinary";
 import { signOut } from "next-auth/react";
 import { MdDashboardCustomize } from "react-icons/md";
+import Logo from "@/app/components/Logo";
 
 interface Props {
   children: ReactNode;
@@ -247,7 +248,7 @@ const FarmerHomePage = ({ children }: Props) => {
                 alignItems={"center"}
                 gap={"1.5rem"}
               >
-                <Image src={`/logo.webp`} alt="" w={"10rem"} />
+                <Logo />
               </Stack>
               <Stack color={"white"} gap={0}>
                 <Heading fontSize={"2rem"}>{main}</Heading>
@@ -286,7 +287,7 @@ const FarmerHomePage = ({ children }: Props) => {
         zIndex={"100"}
         bg={"rgba(0, 0, 0, .3)"}
         backdropFilter={"blur(5px)"}
-        overflowY={'auto'}
+        overflowY={"auto"}
       >
         <Stack
           border={"1px solid black"}
@@ -295,7 +296,7 @@ const FarmerHomePage = ({ children }: Props) => {
           p={"2rem 2rem"}
           bg={"white"}
           pos={"relative"}
-          mt={'3rem'}
+          mt={"3rem"}
         >
           <Box
             cursor={"pointer"}

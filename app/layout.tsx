@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Baskervville, Red_Hat_Display } from "next/font/google";
+import { Red_Hat_Display, Style_Script  } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./components/provider/provider";
+
+
 
 const red = Red_Hat_Display({
   variable: "--font-red-hat-display",
@@ -9,10 +11,10 @@ const red = Red_Hat_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-export const basker = Baskervville({
-  variable: "--font-basker",
+const Script = Style_Script({
+  variable: "--font-style-script",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ['400'],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${basker.className}`}>
+      <body className={`${red.className}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

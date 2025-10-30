@@ -18,8 +18,8 @@ const Register = () => {
               Sign Up
             </Button>
           </Link>
-          <Heading textAlign={'center'} color={'#11312E'} fontSize={'4xl'}>Local Line for Farms and <br /> Food Hubs</Heading>
-          <Text>Start using Local Line for your sales channels</Text>
+          <Heading textAlign={'center'} maxW={'20ch'} color={'#11312E'} fontSize={'4xl'}>Fresh Harvest Hub for Farms and Food Hubs</Heading>
+          <Text>Start using Fresh Harvest Hub for your sales channels</Text>
         </Stack>
         <Stack w={'40%'} alignItems={'center'} gap={'1rem'}>
             <Image src={'/farmer_reg.webp'} w={'80%'} alt='an image'/>
@@ -35,8 +35,8 @@ const Register = () => {
               Sign Up
             </Button>
           </Link>
-          <Heading textAlign={'center'} color={'#11312E'} fontSize={'4xl'}>Local Line for Buyers</Heading>
-          <Text>Start using Local Line for your local food sourcing.</Text>
+          <Heading textAlign={'center'} color={'#11312E'} fontSize={'4xl'}>Fresh Harvest Hub for Buyers</Heading>
+          <Text>Start using Fresh Harvest Hub for your local food sourcing.</Text>
         </Stack>
     </Flex>
   )

@@ -1,6 +1,14 @@
 "use client";
-import { Box, Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Image,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { LuChevronDown } from "react-icons/lu";
 import { IoIosMenu } from "react-icons/io";
 import useStoreQuery from "./store";
@@ -8,6 +16,7 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import SignOutButton from "./Logout";
+import Logo from "./Logo";
 
 const Header = () => {
   const { status, data: session } = useSession();
@@ -15,6 +24,9 @@ const Header = () => {
   const isOpen = useStoreQuery((s) => s.isOpen);
   const isFixed = useStoreQuery((s) => s.isFixed);
   const setFixed = useStoreQuery((s) => s.setFixed);
+  const [onSupply, setSupply] = useState(false);
+  const [onBuy, setBuy] = useState(false);
+  const [onResource, setResource] = useState(false);
   const SCROLL_THRESHOLD = 0.01;
   useEffect(() => {
     const handleScroll = () => {
@@ -48,9 +60,9 @@ const Header = () => {
     >
       <HStack justify={"space-between"}>
         <Flex gap={{ lgDown: "1rem", lgTo2xl: "2rem" }} alignItems={"center"}>
-          <Box zIndex={"2000"}>
-            <Image src={`/logo.webp`} alt="" w={"10rem"} />
-          </Box>
+          <Link href={"/"}>
+            <Logo />
+          </Link>
           <Box
             zIndex={"2000"}
             display={{ mdDown: "none", mdTo2xl: "flex" }}
@@ -62,8 +74,71 @@ const Header = () => {
               display={"flex"}
               alignItems={"center"}
               gap={".4rem"}
+              cursor={"pointer"}
+              pos={"relative"}
+              // mb={'1rem'}
+              onMouseEnter={() => {
+                setSupply(true);
+                onBuy && setBuy(false);
+                onResource && setResource(false);
+              }}
             >
               Suppliers <LuChevronDown />
+              <Box
+                top={"2.5rem"}
+                left={"-30%"}
+                pos={"absolute"}
+                w={"160%"}
+                bg={"white"}
+                color={"black"}
+                fontSize={"1.2rem"}
+                borderRadius={".2rem"}
+                display={onSupply ? "block" : "none"}
+                onMouseLeave={() => setSupply(false)}
+              >
+                <Stack>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    How it Works
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Join as a Farmer
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Pricing
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Logisstics Support
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    FAQs
+                  </Text>
+                </Stack>
+              </Box>
             </Text>
             <Text
               color={"white"}
@@ -71,8 +146,70 @@ const Header = () => {
               display={"flex"}
               alignItems={"center"}
               gap={".4rem"}
+              cursor={"pointer"}
+              pos={"relative"}
+              onMouseEnter={() => {
+                setBuy(true);
+                onSupply && setSupply(false);
+                onResource && setResource(false);
+              }}
             >
               Buyers <LuChevronDown />
+              <Box
+                top={"2.5rem"}
+                left={"-55%"}
+                pos={"absolute"}
+                w={"220%"}
+                bg={"white"}
+                color={"black"}
+                fontSize={"1.2rem"}
+                borderRadius={".2rem"}
+                display={onBuy ? "block" : "none"}
+                onMouseLeave={() => setBuy(false)}
+              >
+                <Stack>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    How it Works
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Shop Products
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Register
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Delivery & Payment
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    FAQs
+                  </Text>
+                </Stack>
+              </Box>
             </Text>
             <Text
               color={"white"}
@@ -81,8 +218,70 @@ const Header = () => {
               alignItems={"center"}
               gap={".4rem"}
               zIndex={"2000"}
+              cursor={"pointer"}
+              pos={"relative"}
+              onMouseEnter={() => {
+                setResource(true);
+                onBuy && setBuy(false);
+                onSupply && setSupply(false);
+              }}
             >
               Resources <LuChevronDown />
+              <Box
+                top={"2.5rem"}
+                left={"-25%"}
+                pos={"absolute"}
+                w={"150%"}
+                bg={"white"}
+                color={"black"}
+                fontSize={"1.2rem"}
+                borderRadius={".2rem"}
+                display={onResource ? "block" : "none"}
+                onMouseLeave={() => setResource(false)}
+              >
+                <Stack>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Blogs
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Success Stories
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Market Insights
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Help Center
+                  </Text>
+                  <Text
+                    p={".5rem 1rem"}
+                    _hover={{ transform: "scale(1.02)", bg: "rgba(0,0,0,.1)" }}
+                    transitionProperty={"transform, background"}
+                    transitionDuration={".2s"}
+                  >
+                    Contact Us
+                  </Text>
+                </Stack>
+              </Box>
             </Text>
           </Box>
         </Flex>
@@ -118,8 +317,7 @@ const Header = () => {
         )}
         {status === "authenticated" && (
           <Text zIndex={"6500"} color={"white"}>
-            {session.user?.name}{" "}
-            <SignOutButton/>
+            {session.user?.name} <SignOutButton />
           </Text>
         )}
         <Flex display={{ mdDown: "flex", mdTo2xl: "none" }} zIndex={"1000"}>

@@ -36,11 +36,16 @@ body{
 
 
 
-/* Apply the font variable to all headings (if not using Tailwind) */
-/* h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-basker), serif;
-} */
-
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-red-hat-display), serif;
+}
+
+.font-script {
+
+  font-family: var(--font-style-script), sans-serif; 
+}
+
+/* Example: Apply it to all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-style-script), cursive; 
 }

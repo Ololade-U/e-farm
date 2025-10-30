@@ -56,7 +56,7 @@ const FarmerSignUp = () => {
     },
   });
   const onSubmit = async (data: FieldValues) => {
-    setLoading(true)
+    setLoading(true);
     setUser(false);
     setUserName(false);
     try {
@@ -86,7 +86,7 @@ const FarmerSignUp = () => {
     } catch (err) {
       console.error("Fetch operation error:", err);
     }
-    setLoading(false)
+    setLoading(false);
   };
   return (
     <>
@@ -108,7 +108,7 @@ const FarmerSignUp = () => {
             maxWidth={"10ch"}
             color={"#FFFFFF"}
           >
-            Create your Local Line account and start selling.
+            Create your Fresh Harvest Hub account and start selling.
           </Heading>
           <Text pl={"1rem"} color={"#FFFFFF"}>
             No credit card required &#x2022; affordable monthly plan

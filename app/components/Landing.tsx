@@ -15,7 +15,6 @@ import { FaStar } from "react-icons/fa";
 import useStoreQuery from "./store";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { basker } from "../layout";
 
 const Landing = () => {
   const { status } = useSession();
@@ -98,14 +97,16 @@ const Landing = () => {
             </Box>
           </Flex>
           <HStack>
-            <Button
-              p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
-              fontSize={{ mdTo2xl: "xl" }}
-              bg={"white"}
-              color={"black"}
-            >
-              About Us
-            </Button>
+            <Link href={"/#About"} scroll={true}>
+              <Button
+                p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
+                fontSize={{ mdTo2xl: "xl" }}
+                bg={"white"}
+                color={"black"}
+              >
+                About Us
+              </Button>
+            </Link>
             {status === "unauthenticated" && (
               <Link href={"../register"}>
                 <Button

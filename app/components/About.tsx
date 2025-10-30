@@ -3,7 +3,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <Box p={"2rem 4rem"} bg={"rgba(17, 49, 46, .1)"}>
+    <Box id="About" p={"2rem 4rem"} bg={"rgba(17, 49, 46, .1)"}>
       <Heading
         color={"#11312E"}
         fontSize={"4xl"}
