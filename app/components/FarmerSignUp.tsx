@@ -22,7 +22,7 @@ import Link from "next/link";
 import useStoreQuery from "./store";
 
 const Role = z.enum(["BUYER", "FARMER"]);
-const Country = z.enum(["Nigeria", "Ghana", "Cameroon", "Togo"]);
+const LGA = z.enum(["Lagos island", "Ikorodu", "Epe", "Surulere"]);
 
 const schema = z.object({
   email: z.email(),
@@ -31,7 +31,7 @@ const schema = z.object({
     .string()
     .min(7, { message: "Password must be at least 8 characters long" }),
   storeName: z.string().min(3, { message: "Enter a valid store name" }),
-  country: Country,
+  LGA: LGA,
   role: Role,
 });
 
@@ -211,14 +211,16 @@ const FarmerSignUp = () => {
                   </Field.Root>
 
                   <Field.Root mb={"2rem"}>
-                    <Field.Label>Country</Field.Label>
-                    <NativeSelect.Root {...register("country")}>
+                    <Field.Label>LGA</Field.Label>
+                    <NativeSelect.Root {...register("LGA")}>
                       <NativeSelect.Field
-                        name="country"
-                        placeholder="Select Your Country"
+                        name="LGA"
+                        placeholder="Select Your LGA"
                         p={"0 .5rem"}
                       >
-                        <For each={["Nigeria", "Ghana", "Cameroon", "Togo"]}>
+                        <For
+                          each={["Lagos island", "Ikorodu", "Epe", "Surulere"]}
+                        >
                           {(item) => (
                             <option key={item} value={item}>
                               {item}

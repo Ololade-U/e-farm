@@ -22,7 +22,7 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
-  country        String?
+  LGA            String?
   phoneNumber    String?
   role           Role?           @default(BUYER)
   registeredAt   DateTime?       @default(now())
@@ -35,8 +35,6 @@ model User {
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 }
-
-
 
 model Account {
   id                       String  @id @default(cuid())
@@ -98,28 +96,28 @@ model Authenticator {
 }
 
 model Post {
-  id          String   @id @default(cuid())
-  userId      String   
+  id          String       @id @default(cuid())
+  userId      String
   description String
   type        PostType
   amount      Int
-  quantity    Int      @default(1)
+  quantity    Int          @default(1)
   status      Status
   unit        MeasureUnit?
   img         String?
-  postedAt    DateTime @default(now())
-  user        User?     @relation(fields: [userId], references: [id])
+  postedAt    DateTime     @default(now())
+  user        User?        @relation(fields: [userId], references: [id])
   cart        Cart[]
 }
 
-model Cart{
-  id        String   @id @default(cuid())
-  userId    String
-  postId    String
-  quantity  Int      @default(1)
-  addedAt   DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
+model Cart {
+  id       String   @id @default(cuid())
+  userId   String
+  postId   String
+  quantity Int      @default(1)
+  addedAt  DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id])
 
   @@unique([userId, postId])
 }

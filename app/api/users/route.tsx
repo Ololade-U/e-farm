@@ -9,7 +9,6 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-
   const body = await request.json();
 
   const userExist = await prisma.user.findUnique({
@@ -18,7 +17,7 @@ export async function POST(request: NextRequest) {
 
   if (userExist)
     return NextResponse.json({ error: "User already exists" }, { status: 400 });
-//   setUser(true);
+  //   setUser(true);
 
   const userNameExists = await prisma.user.findUnique({
     where: { username: body.username },
@@ -29,7 +28,7 @@ export async function POST(request: NextRequest) {
       { error: "Username already exists" },
       { status: 400 }
     );
-//   setUserName(true);
+  //   setUserName(true);
 
   const hashedPassword = await bcrypt.hash(body.password, 10);
 
@@ -41,13 +40,12 @@ export async function POST(request: NextRequest) {
       storeName: body.storeName,
       name: body.name,
       phoneNumber: body.phoneNumber,
-      country: body.country,
+      LGA: body.LGA,
       username: body.username,
     },
   });
 
-  if(!newUser)
-    return NextResponse.json({error : error}, {status : 400})
+  if (!newUser) return NextResponse.json({ error: error }, { status: 400 });
 
-  return NextResponse.json({ email: newUser.email, id : newUser.id });
+  return NextResponse.json({ email: newUser.email, id: newUser.id });
 }
