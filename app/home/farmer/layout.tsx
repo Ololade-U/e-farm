@@ -90,7 +90,7 @@ const FarmerHomePage = ({ children }: Props) => {
     },
   });
   const setMain = useStoreQuery((s) => s.setMain);
-  const main = useStoreQuery((s) => s.main);
+  const main = useStoreQuery((s) => s.main);  
   const userId = useStoreQuery((s) => s.userId);
   const user = useUserSession();
   const onSubmit = async (data: FieldValues) => {

@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { Products } from "../hooks/usePosts";
 
 interface Quantity {
-  productId: string;
+  productId: string | null;
   quantity: number;
 }
 
@@ -43,7 +43,7 @@ const useStoreQuery = create<StoreQuery>((set) => ({
   userExist: false,
   userNameExist: false,
   postId: "",
-  main: "My Products",
+  main: "Dashboard",
   cart: [],
   products: [],
   searchParam: "",

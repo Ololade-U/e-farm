@@ -2,36 +2,45 @@ import { PostType, Status, MeasureUnit } from "@/app/generated/prisma";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-
-interface Products{
-    id : string,
-    userId : string,
-    description : string,
-    type : PostType,
-    amount : number,
-    quantity : number,
-    postedAt : Date,
-    status : Status,
-    img : string | null
+interface Products {
+  id: string;
+  userId: string;
+  description: string;
+  type: PostType;
+  amount: number;
+  quantity: number;
+  postedAt: Date;
+  status: Status;
+  img: string | null;
 }
 
 type RouteContext = {
-    params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>;
 };
 
-
-
-export async function GET(request: NextRequest, context: RouteContext): Promise<NextResponse<Products[] | { error: string }>> {
+export async function GET(
+  request: NextRequest,
+  context: RouteContext
+): Promise<NextResponse<Products | { error: string }>> {
   const { id } = await context.params;
-  const post = await prisma.post.findMany({
-    where: { userId: id },
+  const post = await prisma.post.findUnique({
+    where: { id: id },
   });
+
+  if (!post)
+    return NextResponse.json(
+      { error: `Post with id ${id} not found` },
+      { status: 404 }
+    );
 
   return NextResponse.json(post);
 }
 
-export async function POST(request: NextRequest, context: RouteContext) : Promise<NextResponse<Products | { error: string }>> {
-  const { id : userId } = await context.params;
+export async function POST(
+  request: NextRequest,
+  context: RouteContext
+): Promise<NextResponse<Products | { error: string }>> {
+  const { id: userId } = await context.params;
   try {
     const body = await request.json();
 
@@ -70,7 +79,10 @@ export async function POST(request: NextRequest, context: RouteContext) : Promis
   }
 }
 
-export async function DELETE(request: NextRequest, context: RouteContext) : Promise<NextResponse<string | { error: string }>> {
+export async function DELETE(
+  request: NextRequest,
+  context: RouteContext
+): Promise<NextResponse<string | { error: string }>> {
   const { id } = await context.params;
   const post = await prisma.post.findUnique({
     where: { id: id },

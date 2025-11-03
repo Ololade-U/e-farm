@@ -6,6 +6,7 @@ import { IoIosAdd } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import useStoreQuery from "./store";
 import { Product } from "../hooks/useAllPosts";
+import Link from "next/link";
 
 interface Props {
   product: Product;
@@ -13,9 +14,9 @@ interface Props {
 
 const CartCard = ({ product }: Props) => {
   const [quantity, setQuantity] = useState(1);
-  const setQuantities = useStoreQuery((s)=> s.setQuantity);
-  useEffect(() => { 
-    setQuantities({productId: product.id, quantity: quantity});
+  const setQuantities = useStoreQuery((s) => s.setQuantity);
+  useEffect(() => {
+    setQuantities({ productId: product.id, quantity: quantity });
   }, [quantity]);
   const removeCart = useStoreQuery((s) => s.removeCart);
   return (
@@ -45,7 +46,9 @@ const CartCard = ({ product }: Props) => {
         height={150}
       />
       <Stack gap={"1.5rem"} w={"100%"}>
-        <Heading fontSize={"2xl"}>{product.description}</Heading>
+        <Link href={`../home/consumer/${product.id}`}>
+          <Heading fontSize={"2xl"}>{product.description}</Heading>
+        </Link>
         <HStack w={"100%"} justifyContent={"space-between"}>
           <Text fontSize={"1.2rem"} fontWeight={"semibold"}>
             N{product.amount}

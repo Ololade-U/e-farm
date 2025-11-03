@@ -1,14 +1,13 @@
 .footer {
   width: 100%;
   background-color: #f5f5f5;
-  margin-top: 7rem;
 }
 
 /* Footer Content */
 .footer-content {
   background-color: #11312E;
   padding: 80px 60px 40px;
-  color: white;
+  color:rgb(17, 46, 49);
 }
 
 .footer-grid {

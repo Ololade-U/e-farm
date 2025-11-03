@@ -6,6 +6,7 @@ import useStoreQuery from "./store";
 import { BsCartCheck } from "react-icons/bs";
 import { Products } from "../hooks/usePosts";
 import useUserSession from "../hooks/useUserSession";
+import Link from "next/link";
 
 interface Prop {
   product: Products;
@@ -20,9 +21,10 @@ const formatAmount = (amount: number) => {
 };
 
 const ProductCard = ({ product }: Prop) => {
-  const user = useUserSession();
-  const productId = { productId: product.id };
-  const userId = { userId: user?.id };
+  const setPostId = useStoreQuery((s)=> s.setPostId)
+  // const user = useUserSession();
+  // const productId = { productId: product.id };
+  // const userId = { userId: user?.id };
   // const onAddToCart = async () => {
   //   addToCart(product.id);
   //   try {
@@ -110,7 +112,11 @@ const ProductCard = ({ product }: Prop) => {
           </Box>
         </Flex>
         <Card.Body p={0}>
-          <Heading fontSize={"1xl"}>{product.description}</Heading>
+          <Link href={`../home/consumer/${product.id}`}>
+            <Heading onClick={()=> setPostId(product.id)} cursor={"pointer"} fontSize={"1xl"}>
+              {product.description}
+            </Heading>
+          </Link>
           <Box display={"flex"} alignItems={"flex-end"}>
             <Text fontSize={"3xl"} fontWeight={"bold"}>
               {formattedAmount}
