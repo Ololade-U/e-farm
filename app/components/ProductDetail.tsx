@@ -15,6 +15,7 @@ import { Product } from "../hooks/useAllPosts";
 import { FaMinus, FaStar } from "react-icons/fa";
 import useStoreQuery from "./store";
 import useProductUploadDetail from "../hooks/useProductUploadDetail";
+import { MdDone } from "react-icons/md";
 
 interface Props {
   product: Product | null;
@@ -159,7 +160,8 @@ const ProductDetail = ({ product }: Props) => {
                 : addToCart(product?.id!)
             }
           >
-            Add to Cart
+            {cart.includes(product?.id!) && <MdDone />}
+            {cart.includes(product?.id!) ? "Added to Cart" : "Add to Cart"  }
           </Button>
         </Stack>
       </Box>
