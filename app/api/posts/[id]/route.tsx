@@ -21,10 +21,10 @@ type RouteContext = {
 export async function GET(
   request: NextRequest,
   context: RouteContext
-): Promise<NextResponse<Products | { error: string }>> {
+): Promise<NextResponse<Products[] | { error: string }>> {
   const { id } = await context.params;
-  const post = await prisma.post.findUnique({
-    where: { id: id },
+  const post = await prisma.post.findMany({
+    where: { userId: id },
   });
 
   if (!post)
