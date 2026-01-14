@@ -1,4 +1,4 @@
-import { PostType, Status, MeasureUnit } from "@/app/generated/prisma";
+import { PostType, Status, MeasureUnit } from "@prisma/client";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

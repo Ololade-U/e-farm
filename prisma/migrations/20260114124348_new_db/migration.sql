@@ -7,7 +7,7 @@ CREATE TABLE `User` (
     `emailVerified` DATETIME(3) NULL,
     `image` VARCHAR(191) NULL,
     `hashedPassword` VARCHAR(191) NULL,
-    `country` VARCHAR(191) NULL,
+    `LGA` VARCHAR(191) NULL,
     `phoneNumber` VARCHAR(191) NULL,
     `role` ENUM('FARMER', 'BUYER') NULL DEFAULT 'BUYER',
     `registeredAt` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -91,9 +91,22 @@ CREATE TABLE `Post` (
     `amount` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL DEFAULT 1,
     `status` ENUM('OnSale', 'SoldOut', 'Inactive') NOT NULL,
+    `unit` ENUM('Kg', 'Litre', 'Unit', 'Crate', 'Bag', 'Bunch') NULL,
     `img` VARCHAR(191) NULL,
     `postedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Cart` (
+    `id` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `postId` VARCHAR(191) NOT NULL,
+    `quantity` INTEGER NOT NULL DEFAULT 1,
+    `addedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `Cart_userId_postId_key`(`userId`, `postId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -108,3 +121,9 @@ ALTER TABLE `Authenticator` ADD CONSTRAINT `Authenticator_userId_fkey` FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE `Post` ADD CONSTRAINT `Post_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Cart` ADD CONSTRAINT `Cart_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Cart` ADD CONSTRAINT `Cart_postId_fkey` FOREIGN KEY (`postId`) REFERENCES `Post`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

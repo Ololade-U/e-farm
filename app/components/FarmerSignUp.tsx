@@ -60,8 +60,9 @@ const FarmerSignUp = () => {
     setUser(false);
     setUserName(false);
     try {
-      const response = await fetch("../api/users", {
+      const response = await fetch("/api/users", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (response.ok) {

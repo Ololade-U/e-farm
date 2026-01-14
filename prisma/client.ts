@@ -1,13 +1,24 @@
-import { PrismaClient } from '../app/generated/prisma';
+import { PrismaClient } from "../src/generated/client";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
-const globalForPrisma = global as unknown as {
-  prisma: PrismaClient | undefined;
+
+
+const prismaClientSingleton = () => {
+  return new PrismaClient({ adapter: new PrismaMariaDb({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  }) });
 };
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
+declare global {
+  var prisma: ReturnType<typeof prismaClientSingleton> | undefined;
 }
 
+const prisma = globalThis.prisma ?? prismaClientSingleton();
+
 export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
