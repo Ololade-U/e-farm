@@ -1,4 +1,3 @@
-// middleware.ts or middleware.js
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
@@ -9,7 +8,6 @@ const FARMER_REGISTER_PATH = "/register/farmer";
 const CONSUMER_REGISTER_PATH = "/register/consumer";
 
 export default withAuth(
-  // The primary logic for redirection and role checking
   function middleware(req) {
     const token = req.nextauth.token;
     const { pathname } = req.nextUrl;
@@ -36,12 +34,10 @@ export default withAuth(
         (pathname.startsWith("/home/farmer") && userRole !== "FARMER") ||
         (pathname.startsWith("/home/consumer") && userRole !== "BUYER")
       ) {
-        // Redirect them back to *their* correct dashboard
         return NextResponse.redirect(new URL(DASHBOARD_PATH, req.url));
       }
     }
 
-    // B. For all other cases (unauthenticated or correct-role access), continue
     return NextResponse.next();
   },
   {
@@ -67,7 +63,6 @@ export default withAuth(
 );
 
 export const config = {
-  // Match the root, login page, and all /home paths for complete control
   matcher: [
     "/home/:path*",
     "/",

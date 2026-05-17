@@ -12,7 +12,7 @@ const formatAmount = (amount: number) => {
   return new Intl.NumberFormat("en-NG", {
     style: "currency",
     currency: "NGN",
-    minimumFractionDigits: 2, // Ensures two decimal places (e.g., .00)
+    minimumFractionDigits: 2,
   }).format(amount);
 };
 
