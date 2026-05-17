@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Red_Hat_Display, Style_Script  } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./components/provider/provider";
+import MobileBlocker from "./components/MobileBlocker";
 
 
 
@@ -37,7 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${red.className}`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <MobileBlocker>
+            {children}
+          </MobileBlocker>
+        </AuthProvider>
       </body>
     </html>
   );
