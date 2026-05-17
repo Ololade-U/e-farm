@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Box, VStack, Heading, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, VStack, Heading, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 export default function MobileBlocker({
   children,
@@ -17,8 +17,8 @@ export default function MobileBlocker({
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Return null while hydrating to avoid mismatch
@@ -37,25 +37,14 @@ export default function MobileBlocker({
         px={6}
       >
         <VStack gap={6} textAlign="center">
-          <Heading
-            as="h1"
-            size="2xl"
-            color="gray.800"
-          >
+          <Heading as="h1" size="2xl" color="gray.800">
             📱 Mobile View in Progress
           </Heading>
-          <Text
-            fontSize="lg"
-            color="gray.600"
-            maxW="400px"
-          >
-            We're currently optimizing our website for mobile devices. Please view this site on a larger device for the best experience.
+          <Text fontSize="lg" color="gray.600" maxW="400px">
+            We're currently optimizing our website for mobile devices. Please
+            view this site on a larger device for the best experience.
           </Text>
-          <Text
-            fontSize="sm"
-            color="gray.500"
-            mt={4}
-          >
+          <Text fontSize="sm" color="gray.500" mt={4}>
             Thank you for your patience! 🙏
           </Text>
         </VStack>

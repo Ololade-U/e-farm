@@ -1,10 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Red_Hat_Display, Style_Script  } from "next/font/google";
+import { Red_Hat_Display, Style_Script } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./components/provider/provider";
 import MobileBlocker from "./components/MobileBlocker";
-
-
 
 const red = Red_Hat_Display({
   variable: "--font-red-hat-display",
@@ -15,7 +13,7 @@ const red = Red_Hat_Display({
 const Script = Style_Script({
   variable: "--font-style-script",
   subsets: ["latin"],
-  weight: ['400'],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -39,9 +37,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${red.className}`}>
         <AuthProvider>
-          <MobileBlocker>
-            {children}
-          </MobileBlocker>
+          <MobileBlocker>{children}</MobileBlocker>
         </AuthProvider>
       </body>
     </html>
