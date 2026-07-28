@@ -42,19 +42,22 @@ const ProductDetail = ({ product }: Props) => {
   const removeCart = useStoreQuery((s) => s.removeCart);
   return (
     <Box
-      h={"83vh"}
+      h={{ base: "auto", md: "83vh" }}
       display={"flex"}
+      flexDirection={{ base: "column", md: "row" }}
       justifyContent={"center"}
       alignItems={"center"}
-      overflow={"hidden"}
+      overflow={{ base: "visible", md: "hidden" }}
+      overflowY={{ base: "auto", md: "hidden" }}
+      p={{ base: "1rem", md: 0 }}
       gap={"1rem"}
     >
       <Stack
         alignContent={"flex-start"}
         alignItems={"center"}
         gap={".5rem"}
-        w={"30%"}
-        h={"100%"}
+        w={{ base: "100%", md: "30%" }}
+        h={{ base: "auto", md: "100%" }}
       >
         <HStack
           cursor={"pointer"}
@@ -90,13 +93,13 @@ const ProductDetail = ({ product }: Props) => {
           )}
         </HStack>
       </Stack>
-      <Box w={"30%"} h={"100%"}>
+      <Box w={{ base: "100%", md: "30%" }} h={{ base: "auto", md: "100%" }}>
         <Stack
-          h={"80%"}
+          h={{ base: "auto", md: "80%" }}
           gap={"1rem"}
           borderRadius={".5rem"}
           bg={"#e3e3e3"}
-          mt={"2rem"}
+          mt={{ base: "1rem", md: "2rem" }}
           p={"1rem"}
         >
           <Heading fontWeight={"700"}>{product?.description}</Heading>

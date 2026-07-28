@@ -95,11 +95,17 @@ const ConsumerSignUp = () => {
   };
   return (
     <>
-      <HStack h={"100vh"} gap={0} overflowY={"hidden"}>
+      <HStack
+        h={{ base: "auto", md: "100vh" }}
+        flexDirection={{ base: "column", md: "row" }}
+        gap={0}
+        overflowY={{ base: "visible", md: "hidden" }}
+      >
         <Box
-          h={"100%"}
+          h={{ base: "auto", md: "100%" }}
+          w={{ base: "100%", md: "50%" }}
+          p={{ base: "2.5rem 1.5rem", md: 0 }}
           textAlign={"left"}
-          w={"50%"}
           bg={"#09734E"}
           display={"flex"}
           flexDirection={"column"}
@@ -108,34 +114,37 @@ const ConsumerSignUp = () => {
         >
           <Heading
             mb={"1rem"}
-            fontSize={"6xl"}
+            fontSize={{ base: "2xl", md: "6xl" }}
             lineHeight={"1"}
-            maxWidth={"10ch"}
+            maxWidth={{ base: "22ch", md: "10ch" }}
+            textAlign={{ base: "center", md: "left" }}
             color={"#FFFFFF"}
           >
             Direct from the Farm: Join the Local Food Revolution.
           </Heading>
-          <Text pl={"1rem"} color={"#FFFFFF"}>
+          <Text pl={{ base: 0, md: "1rem" }} textAlign={{ base: "center", md: "left" }} color={"#FFFFFF"}>
             Transparent Sourcing &#x2022; Wider Selection &#x2022; Fair Prices,
             Fair Pay
           </Text>
         </Box>
         <Box
           bg={"#f2f2f2"}
-          h={"100%"}
-          w={"50%"}
+          h={{ base: "auto", md: "100%" }}
+          w={{ base: "100%", md: "50%" }}
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
           overflowY={"auto"}
-          pt={"2rem"}
+          p={{ base: "2rem 1rem", md: 0 }}
+          pt={{ base: "2rem", md: "2rem" }}
         >
           <Stack
             border={"1px solid black"}
             borderRadius={".8rem"}
-            w={"70%"}
-            p={"1rem 2rem"}
-            mt={"2rem"}
+            w={{ base: "100%", md: "70%" }}
+            maxW={{ base: "26rem", md: "none" }}
+            p={{ base: "1rem 1.25rem", md: "1rem 2rem" }}
+            mt={{ base: 0, md: "2rem" }}
           >
             <form action="" onSubmit={handleSubmit(onSubmit)}>
               <Fieldset.Root size="lg" maxW="md">
@@ -269,12 +278,14 @@ const ConsumerSignUp = () => {
       </HStack>
       <Box
         display={success ? "flex" : "none"}
-        w={"40vw"}
-        h={"50vh"}
-        pos={"absolute"}
-        top={"25%"}
-        left={"35%"}
-        zIndex={"1000"}
+        w={{ base: "85%", md: "40vw" }}
+        h={{ base: "auto", md: "50vh" }}
+        p={{ base: "2.5rem 1.5rem", md: 0 }}
+        pos={"fixed"}
+        top={"50%"}
+        left={"50%"}
+        transform={"translate(-50%, -50%)"}
+        zIndex={"9999"}
         flexDirection={"column"}
         alignItems={"center"}
         gap={"2rem"}

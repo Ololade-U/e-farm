@@ -2,9 +2,11 @@
 import {
   Box,
   Button,
+  Drawer,
   Flex,
   HStack,
   Image,
+  Portal,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -68,7 +70,7 @@ const Header = () => {
             display={{ mdDown: "none", mdTo2xl: "flex" }}
             gap={{ lgDown: ".7rem", lgTo2xl: "1.5rem" }}
           >
-            <Text
+            <Box
               color={"white"}
               fontSize={{ xlTo2xl: "1.4rem", mdToLg: "1rem" }}
               display={"flex"}
@@ -139,8 +141,8 @@ const Header = () => {
                   </Text>
                 </Stack>
               </Box>
-            </Text>
-            <Text
+            </Box>
+            <Box
               color={"white"}
               fontSize={{ xlTo2xl: "1.4rem", mdToLg: "1rem" }}
               display={"flex"}
@@ -210,8 +212,8 @@ const Header = () => {
                   </Text>
                 </Stack>
               </Box>
-            </Text>
-            <Text
+            </Box>
+            <Box
               color={"white"}
               fontSize={{ xlTo2xl: "1.4rem", mdToLg: "1rem" }}
               display={"flex"}
@@ -282,7 +284,7 @@ const Header = () => {
                   </Text>
                 </Stack>
               </Box>
-            </Text>
+            </Box>
           </Box>
         </Flex>
         {status === "unauthenticated" && (
@@ -316,7 +318,11 @@ const Header = () => {
           </Flex>
         )}
         {status === "authenticated" && (
-          <Text zIndex={"6500"} color={"white"}>
+          <Text
+            display={{ mdDown: "none", mdTo2xl: "block" }}
+            zIndex={"6500"}
+            color={"white"}
+          >
             {session.user?.name} <SignOutButton />
           </Text>
         )}
@@ -336,6 +342,95 @@ const Header = () => {
           )}
         </Flex>
       </HStack>
+      <Drawer.Root
+        open={isOpen}
+        onOpenChange={(e) => setOpen(e.open)}
+        placement="end"
+        size="xs"
+      >
+        <Portal>
+        <Drawer.Backdrop zIndex={"9999"} />
+        <Drawer.Positioner zIndex={"9999"}>
+          <Drawer.Content bg={"#11312E"} color={"white"}>
+            <Drawer.Header borderBottom={"1px solid rgba(255,255,255,.15)"}>
+              <Drawer.Title>Menu</Drawer.Title>
+            </Drawer.Header>
+            <Drawer.Body>
+              <Stack gap={"1.5rem"} pt={"1rem"}>
+                <Stack gap={".5rem"}>
+                  <Text fontWeight={"700"} color={"#B37F37"}>
+                    Suppliers
+                  </Text>
+                  <Stack gap={".6rem"} pl={".5rem"}>
+                    <Text>How it Works</Text>
+                    <Text>Join as a Farmer</Text>
+                    <Text>Pricing</Text>
+                    <Text>Logistics Support</Text>
+                    <Text>FAQs</Text>
+                  </Stack>
+                </Stack>
+                <Stack gap={".5rem"}>
+                  <Text fontWeight={"700"} color={"#B37F37"}>
+                    Buyers
+                  </Text>
+                  <Stack gap={".6rem"} pl={".5rem"}>
+                    <Text>How it Works</Text>
+                    <Text>Shop Products</Text>
+                    <Text>Register</Text>
+                    <Text>Delivery & Payment</Text>
+                    <Text>FAQs</Text>
+                  </Stack>
+                </Stack>
+                <Stack gap={".5rem"}>
+                  <Text fontWeight={"700"} color={"#B37F37"}>
+                    Resources
+                  </Text>
+                  <Stack gap={".6rem"} pl={".5rem"}>
+                    <Text>Blogs</Text>
+                    <Text>Success Stories</Text>
+                    <Text>Market Insights</Text>
+                    <Text>Help Center</Text>
+                    <Text>Contact Us</Text>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </Drawer.Body>
+            <Drawer.Footer borderTop={"1px solid rgba(255,255,255,.15)"}>
+              {status === "unauthenticated" && (
+                <Stack w={"100%"} gap={".7rem"}>
+                  <Link href={"../login"} onClick={() => setOpen(false)}>
+                    <Button
+                      w={"100%"}
+                      bg={"white"}
+                      color={"black"}
+                      borderRadius={".5rem"}
+                    >
+                      Log in
+                    </Button>
+                  </Link>
+                  <Link href={"../register"} onClick={() => setOpen(false)}>
+                    <Button
+                      w={"100%"}
+                      bg={"#B37F37"}
+                      color={"white"}
+                      borderRadius={".5rem"}
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
+                </Stack>
+              )}
+              {status === "authenticated" && (
+                <HStack w={"100%"} justifyContent={"space-between"}>
+                  <Text>{session?.user?.name}</Text>
+                  <SignOutButton />
+                </HStack>
+              )}
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
     </Box>
   );
 };

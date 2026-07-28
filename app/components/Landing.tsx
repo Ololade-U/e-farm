@@ -20,7 +20,6 @@ const Landing = () => {
   const { status } = useSession();
   const users = [1, 2, 3, 4, 5];
   let [userImageId, setUserImageId] = useState(1);
-  const isOpen = useStoreQuery((s) => s.isOpen);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -40,13 +39,14 @@ const Landing = () => {
         overflowX={"hidden"}
         w={"100vw"}
         zIndex={"300"}
-        h={"85vh"}
+        h={{ base: "auto", md: "85vh" }}
         bg={"#11312E"}
       >
         <Stack
           zIndex={"2000"}
           w={{ mdDown: "75%", mdTo2xl: "60%" }}
           p={{ mdDown: "1rem 1.5rem", mdTo2xl: "1rem 4rem" }}
+          pb={{ base: "3rem", mdTo2xl: "1rem" }}
           gap={"1.7rem"}
         >
           <Heading
@@ -134,6 +134,7 @@ const Landing = () => {
           </HStack>
         </Stack>
         <Stack
+          display={{ base: "none", md: "block" }}
           zIndex={0}
           width={"60%"}
           pos={"absolute"}
@@ -152,6 +153,7 @@ const Landing = () => {
           />
         </Stack>
         <Text
+          display={{ base: "none", md: "block" }}
           bgBlendMode={"multiply"}
           bg="linear-gradient(to right, rgba(17, 49, 46, 1), rgba(17, 49, 46, .6), rgba(17, 49, 46, .1))"
           zIndex={"1400"}
@@ -160,19 +162,6 @@ const Landing = () => {
           position={"absolute"}
           top={0}
           right={0}
-        ></Text>
-        <Text
-          zIndex={"3000"}
-          position={"absolute"}
-          h={"85vh"}
-          width={"100%"}
-          top={"15vh"}
-          bg={"red"}
-          right={"-100%"}
-          animationName={isOpen ? "navOpen" : ""}
-          animationDuration={".3s"}
-          animationFillMode={"forwards"}
-          animationTimingFunction={"linear"}
         ></Text>
       </Box>
     </div>

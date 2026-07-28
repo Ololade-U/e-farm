@@ -36,8 +36,8 @@ const Products = () => {
           </Text>
         </EmptyPage>
       ) : (
-        <Box overflowY={"auto"}>
-          <Table.Root height={"100%"} size="lg" striped>
+        <Box overflowY={"auto"} overflowX={"auto"}>
+          <Table.Root height={"100%"} minWidth={"700px"} size="lg" striped>
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader textAlign={"center"} fontSize={"1.1rem"}>

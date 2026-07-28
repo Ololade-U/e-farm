@@ -1,30 +1,38 @@
-import { Box, Heading, HStack, Stack, Text } from '@chakra-ui/react'
+import { Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
+
+const stats = [
+  { value: '23%', label: 'Annual Sales Growth' },
+  { value: '12 hrs', label: 'Weekly Time Savings' },
+  { value: '10x', label: 'ROI Per Year' },
+  { value: '14+', label: 'States' },
+]
 
 const ROI = () => {
   return (
-    <Box w={'100%'} height={'60vh'} display={'flex'} justifyContent={'center'} gap={'4rem'}>
-        <HStack gap={'3rem'} justifyContent={'flex-end'}>
-            <Stack gap={'3.5rem'} justify={'flex-end'} align={'flex-start'} borderLeft={'.2rem solid #145841'} p={'5rem 0 1rem .5rem'}>
-                <Heading fontSize={'8xl'} color={'#11312E'}>23%</Heading>
-                <Text color={'#11312E'} pl={'.5rem'}>Annual Sales Growth</Text>
-            </Stack>
-            <Stack gap={'3.5rem'} justify={'flex-end'} align={'flex-start'} borderLeft={'.2rem solid #145841'} p={'5rem 0 1rem .5rem'}>
-                <Heading fontSize={'8xl'} color={'#11312E'}>12 hrs</Heading>
-                <Text color={'#11312E'} pl={'.5rem'}>Weekly Time Savings</Text>
-            </Stack>
-        </HStack>
-        <HStack gap={'4.5rem'} justifyContent={'flex-start'}>
-            <Stack gap={'3.5rem'} justify={'flex-end'} align={'flex-start'} borderLeft={'.2rem solid #145841'} p={'5rem 0 1rem .5rem'}>
-                <Heading fontSize={'8xl'} color={'#11312E'}>10x</Heading>
-                <Text color={'#11312E'} pl={'.5rem'}>ROI Per Year</Text>
-            </Stack>
-            <Stack gap={'3.5rem'} justify={'flex-end'} align={'flex-start'} borderLeft={'.2rem solid #145841'} p={'5rem 0 1rem .5rem'}>
-                <Heading fontSize={'8xl'} color={'#11312E'}>14+</Heading>
-                <Text color={'#11312E'} pl={'.5rem'}>States</Text>
-            </Stack>
-        </HStack>
-    </Box>
+    <SimpleGrid
+      columns={{ base: 2, md: 4 }}
+      gap={{ base: '1.5rem', md: '3rem' }}
+      w={'100%'}
+      p={{ base: '2.5rem 1.5rem', md: '3rem 4rem' }}
+    >
+      {stats.map((stat) => (
+        <Stack
+          key={stat.label}
+          gap={{ base: '.5rem', md: '1rem' }}
+          align={'flex-start'}
+          borderLeft={'.2rem solid #145841'}
+          p={{ base: '.5rem 0 .5rem .5rem', md: '1rem 0 1rem .5rem' }}
+        >
+          <Heading fontSize={{ base: '2xl', sm: '3xl', md: '5xl', lg: '7xl' }} color={'#11312E'}>
+            {stat.value}
+          </Heading>
+          <Text fontSize={{ base: '.8rem', md: '1rem' }} color={'#11312E'}>
+            {stat.label}
+          </Text>
+        </Stack>
+      ))}
+    </SimpleGrid>
   )
 }
 

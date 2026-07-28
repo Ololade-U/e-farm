@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { LuBadgeDollarSign } from "react-icons/lu";
 import { MdOutlineShowChart } from "react-icons/md";
@@ -8,7 +8,7 @@ import { CiMoneyBill } from "react-icons/ci";
 
 const Dashboard = () => {
   return (
-    <Box h={"78vh"} p={".5rem 2rem"}>
+    <Box h={"78vh"} p={{ base: ".5rem 1rem", md: ".5rem 2rem" }}>
       <Flex alignItems={"center"} gap={".5rem"}>
         <Box p={".5rem"} borderRadius={"15%"} bg={"#FEF6D2"}>
           <MdOutlineShowChart fill="#FF9806" size={"1.2rem"} />
@@ -17,12 +17,10 @@ const Dashboard = () => {
           Key Metrics
         </Text>
       </Flex>
-      <HStack h={"100%"} flexWrap={"wrap"} justifyContent={"space-between"}>
+      <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={"1rem"} mt={"1rem"}>
         <Box
-          h={"35%"}
           p={"1.5rem"}
           borderRadius={".5rem"}
-          w={"23%"}
           bg={"rgba(17, 49, 21,.6)"}
         >
           <HStack justifyContent={"space-between"}>
@@ -43,13 +41,7 @@ const Dashboard = () => {
             </Stack>
           </HStack>
         </Box>
-        <Box
-          h={"35%"}
-          p={"1.5rem"}
-          borderRadius={".5rem"}
-          w={"23%"}
-          bg={"#E0FCEE"}
-        >
+        <Box p={"1.5rem"} borderRadius={".5rem"} bg={"#E0FCEE"}>
           <HStack justifyContent={"space-between"}>
             <Box p={".5rem"} borderRadius={"15%"} bg={"#00BD7B"}>
               <LuBadgeDollarSign size={"1.3rem"} />
@@ -64,13 +56,7 @@ const Dashboard = () => {
             </Stack>
           </HStack>
         </Box>
-        <Box
-          h={"35%"}
-          p={"1.5rem"}
-          borderRadius={".5rem"}
-          w={"23%"}
-          bg={"rgba(17, 46, 49,.6)"}
-        >
+        <Box p={"1.5rem"} borderRadius={".5rem"} bg={"rgba(17, 46, 49,.6)"}>
           <HStack justifyContent={"space-between"}>
             <Box p={".5rem"} borderRadius={"15%"} bg={"rgb(17, 46, 49)"}>
               <RiShoppingBag4Fill fill="white" size={"1.3rem"} />
@@ -89,13 +75,7 @@ const Dashboard = () => {
             </Stack>
           </HStack>
         </Box>
-        <Box
-          h={"35%"}
-          p={"1.5rem"}
-          borderRadius={".5rem"}
-          w={"23%"}
-          bg={"#FEF6D2"}
-        >
+        <Box p={"1.5rem"} borderRadius={".5rem"} bg={"#FEF6D2"}>
           <HStack justifyContent={"space-between"}>
             <Box p={".5rem"} borderRadius={"15%"} bg={"#FF9806"}>
               <FaRegClock fill="white" size={"1.3rem"} />
@@ -110,13 +90,7 @@ const Dashboard = () => {
             </Stack>
           </HStack>
         </Box>
-        <Box
-          h={"35%"}
-          p={"1.5rem"}
-          borderRadius={".5rem"}
-          w={"23%"}
-          bg={"#E0FCEE"}
-        >
+        <Box p={"1.5rem"} borderRadius={".5rem"} bg={"#E0FCEE"}>
           <HStack justifyContent={"space-between"}>
             <Box p={".5rem"} borderRadius={"15%"} bg={"#00BD7B"}>
               <CiMoneyBill fill="white" size={"1.3rem"} />
@@ -131,7 +105,7 @@ const Dashboard = () => {
             </Stack>
           </HStack>
         </Box>
-      </HStack>
+      </SimpleGrid>
     </Box>
   );
 };

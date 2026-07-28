@@ -11,18 +11,18 @@ const Script = Style_Script({
 const Logo = () => {
   return (
     <Box
-      w={"10rem"}
+      w={{ base: "7rem", md: "10rem" }}
       gap={".3rem"}
-      mr={"1rem"}
+      mr={{ base: ".5rem", md: "1rem" }}
       alignItems={"center"}
       display={"flex"}
       zIndex={"2000"}
     >
-      <Image src={`/FreshLogo.png`} alt="" w={"3rem"} />
+      <Image src={`/FreshLogo.png`} alt="" w={{ base: "2rem", md: "3rem" }} />
       <Text
         textAlign={"center"}
-        fontSize={"1.1rem"}
-        minW={"10ch"}
+        fontSize={{ base: ".8rem", md: "1.1rem" }}
+        minW={{ base: "7ch", md: "10ch" }}
         fontWeight={"600"}
         color={"white"}
         className={`${Script.className}`}

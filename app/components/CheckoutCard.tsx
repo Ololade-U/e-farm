@@ -36,11 +36,12 @@ const CheckoutCard = ({ product }: Props) => {
   const delivery = total * 0.1;
   return (
     <Box
-      pos={"fixed"}
-      top={"21vh"}
-      right={"2rem"}
-      w={"35%"}
-      h={"75vh"}
+      pos={{ base: "static", md: "fixed" }}
+      top={{ md: "21vh" }}
+      right={{ md: "2rem" }}
+      w={{ base: "100%", md: "35%" }}
+      h={{ base: "auto", md: "75vh" }}
+      mt={{ base: "1rem", md: 0 }}
       bg={"white"}
       borderRadius={".6rem"}
       p={"1rem"}

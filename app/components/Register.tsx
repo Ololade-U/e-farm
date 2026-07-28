@@ -4,8 +4,15 @@ import React from 'react'
 
 const Register = () => {
   return (
-    <Flex height={'85vh'} justify={'center'} gap={'2rem'} p={'2rem 0'}>
-        <Stack w={'40%'} alignItems={'center'} gap={'1rem'}>
+    <Flex
+      height={{ base: "auto", md: "85vh" }}
+      flexDirection={{ base: "column", md: "row" }}
+      justify={"center"}
+      align={"center"}
+      gap={{ base: "2.5rem", md: "2rem" }}
+      p={{ base: "2rem 1.5rem", md: "2rem 0" }}
+    >
+        <Stack w={{ base: "100%", md: "40%" }} maxW={{ base: "26rem", md: "none" }} alignItems={'center'} gap={'1rem'}>
             <Image src={'/farmer_reg.webp'} w={'80%'} alt='an image'/>
             <Link href={"../register/farmer"}>
             <Button
@@ -18,10 +25,10 @@ const Register = () => {
               Sign Up
             </Button>
           </Link>
-          <Heading textAlign={'center'} maxW={'20ch'} color={'#11312E'} fontSize={'4xl'}>Fresh Harvest Hub for Farms and Food Hubs</Heading>
-          <Text>Start using Fresh Harvest Hub for your sales channels</Text>
+          <Heading textAlign={'center'} maxW={'20ch'} color={'#11312E'} fontSize={{ base: '2xl', md: '4xl' }}>Fresh Harvest Hub for Farms and Food Hubs</Heading>
+          <Text textAlign={'center'} fontSize={{ base: 'sm', md: 'md' }}>Start using Fresh Harvest Hub for your sales channels</Text>
         </Stack>
-        <Stack w={'40%'} alignItems={'center'} gap={'1rem'}>
+        <Stack w={{ base: "100%", md: "40%" }} maxW={{ base: "26rem", md: "none" }} alignItems={'center'} gap={'1rem'}>
             <Image src={'/farmer_reg.webp'} w={'80%'} alt='an image'/>
             <Link href={"../register/consumer"}>
             <Button
@@ -35,8 +42,8 @@ const Register = () => {
               Sign Up
             </Button>
           </Link>
-          <Heading textAlign={'center'} color={'#11312E'} fontSize={'4xl'}>Fresh Harvest Hub for Buyers</Heading>
-          <Text>Start using Fresh Harvest Hub for your local food sourcing.</Text>
+          <Heading textAlign={'center'} color={'#11312E'} fontSize={{ base: '2xl', md: '4xl' }}>Fresh Harvest Hub for Buyers</Heading>
+          <Text textAlign={'center'} fontSize={{ base: 'sm', md: 'md' }}>Start using Fresh Harvest Hub for your local food sourcing.</Text>
         </Stack>
     </Flex>
   )

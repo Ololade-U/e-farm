@@ -62,19 +62,21 @@ const Login = () => {
   return (
     <Box
       bg={"#f2f2f2"}
-      h={"100vh"}
+      minH={"100vh"}
       w={"100%"}
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
       overflowX={"auto"}
+      p={{ base: "2rem 1rem", md: 0 }}
     >
       <Stack
         bg={"white"}
         border={"1px solid black"}
         borderRadius={".8rem"}
-        w={"40%"}
-        p={"2rem 2rem"}
+        w={{ base: "100%", md: "40%" }}
+        maxW={{ base: "26rem", md: "none" }}
+        p={{ base: "1.5rem 1.25rem", md: "2rem 2rem" }}
       >
         <form onSubmit={handleSubmit(handleSignIn)}>
           <Fieldset.Root gap={".5rem"} size="sm" maxW="md">

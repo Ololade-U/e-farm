@@ -2,6 +2,7 @@
 import React, { ReactNode, useState } from "react";
 import {
   Button,
+  Drawer,
   Grid,
   GridItem,
   Heading,
@@ -16,6 +17,7 @@ import {
   For,
   Input,
   NativeSelect,
+  Portal,
   Spinner,
 } from "@chakra-ui/react";
 import { RiShoppingBag4Fill } from "react-icons/ri";
@@ -23,6 +25,7 @@ import { RiMenuAddFill } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { LuBadgeDollarSign } from "react-icons/lu";
 import { IoMdHelpCircle } from "react-icons/io";
+import { IoIosMenu } from "react-icons/io";
 import useUserSession from "@/app/hooks/useUserSession";
 import useStoreQuery from "@/app/components/store";
 import { CiLogout } from "react-icons/ci";
@@ -75,6 +78,7 @@ const FarmerHomePage = ({ children }: Props) => {
   };
   const [publicId] = useState("");
   const [upload, setUpload] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const {
@@ -124,12 +128,13 @@ const FarmerHomePage = ({ children }: Props) => {
         h={"100vh"}
         overflowY={"hidden"}
         templateRows={"15vh 1fr"}
-        templateColumns={"170px 1fr"}
+        templateColumns={{ base: "1fr", md: "170px 1fr" }}
       >
         <GridItem
+          display={{ base: "none", md: "block" }}
+          gridRow={"2 / 3"}
+          gridColumn={"1 / 2"}
           height={"85vh"}
-          rowSpan={1}
-          colSpan={1}
           borderRight={"1px solid #dbd9d9"}
         >
           <Flex
@@ -233,27 +238,38 @@ const FarmerHomePage = ({ children }: Props) => {
             </Button>
           </Flex>
         </GridItem>
-        <GridItem gridRow={"1/2"} gridColumn={"1/3"} bg={"#11312E"}>
+        <GridItem
+          gridRow={"1 / 2"}
+          gridColumn={{ base: "1 / 2", md: "1 / 3" }}
+          bg={"#11312E"}
+        >
           <Flex
             h={"100%"}
             justifyContent={"space-between"}
             alignItems={"center"}
+            p={{ base: "0 1rem", md: 0 }}
           >
             <HStack h={"100%"}>
+              <Box hideFrom={"md"} onClick={() => setNavOpen(true)}>
+                <IoIosMenu fill="white" size={"1.7rem"} cursor={"pointer"} />
+              </Box>
               <Stack
                 h={"100%"}
-                mr={"2rem"}
+                mr={{ base: "1rem", md: "2rem" }}
                 justifyContent={"center"}
                 pt={".5rem"}
                 alignItems={"center"}
                 gap={"1.5rem"}
+                hideBelow={"md"}
               >
                 <Logo />
               </Stack>
               <Stack color={"white"} gap={0}>
-                <Heading fontSize={"2rem"}>{main}</Heading>
+                <Heading fontSize={{ base: "1.3rem", md: "2rem" }}>
+                  {main}
+                </Heading>
                 {main === "My Products" && (
-                  <Text>
+                  <Text hideBelow={"md"}>
                     Your next sale start here, upload your products and lets
                     launch
                   </Text>
@@ -263,18 +279,145 @@ const FarmerHomePage = ({ children }: Props) => {
             <Button
               bg={"#B37F37"}
               p={{ mdTo2xl: "1.5rem 1.3rem", mdDown: "1.2rem 1rem" }}
-              fontSize={{ mdTo2xl: "xl" }}
-              mr={"1rem"}
+              fontSize={{ mdTo2xl: "xl", mdDown: "sm" }}
+              mr={{ base: 0, md: "1rem" }}
               onClick={() => setUpload(true)}
             >
               Upload Products
             </Button>
           </Flex>
         </GridItem>
-        <GridItem overflowY={"auto"} height={"100%"} padding={"1rem .5rem"}>
+        <GridItem
+          gridRow={"2 / 3"}
+          gridColumn={{ base: "1 / 2", md: "2 / 3" }}
+          overflowY={"auto"}
+          height={"100%"}
+          padding={"1rem .5rem"}
+        >
           {children}
         </GridItem>
       </Grid>
+      <Drawer.Root
+        open={navOpen}
+        onOpenChange={(e) => setNavOpen(e.open)}
+        placement="start"
+        size="xs"
+      >
+        <Portal>
+        <Drawer.Backdrop zIndex={"9999"} />
+        <Drawer.Positioner zIndex={"9999"}>
+          <Drawer.Content>
+            <Drawer.Header borderBottom={"1px solid #dbd9d9"}>
+              <Drawer.Title>{`Hi ${user?.username}`}</Drawer.Title>
+            </Drawer.Header>
+            <Drawer.Body p={0}>
+              <Stack gap={0}>
+                <HStack
+                  p={"1rem"}
+                  bg={main === "Dashboard" ? "#B37F37" : "white"}
+                  color={main === "Dashboard" ? "white" : "black"}
+                  cursor={"pointer"}
+                  borderBottom={"1px solid #dbd9d9"}
+                  onClick={() => {
+                    setMain("Dashboard");
+                    setNavOpen(false);
+                  }}
+                >
+                  <MdDashboardCustomize size={"1.3rem"} />
+                  <Text fontSize={"1.1rem"}>Dashboard</Text>
+                </HStack>
+                <HStack
+                  p={"1rem"}
+                  bg={main === "My Products" ? "#B37F37" : "white"}
+                  color={main === "My Products" ? "white" : "black"}
+                  cursor={"pointer"}
+                  borderBottom={"1px solid #dbd9d9"}
+                  onClick={() => {
+                    setMain("My Products");
+                    setNavOpen(false);
+                  }}
+                >
+                  <RiShoppingBag4Fill size={"1.3rem"} />
+                  <Text fontSize={"1.1rem"}>My Products</Text>
+                </HStack>
+                <HStack
+                  p={"1rem"}
+                  bg={main === "Manage" ? "#B37F37" : "white"}
+                  color={main === "Manage" ? "white" : "black"}
+                  cursor={"pointer"}
+                  borderBottom={"1px solid #dbd9d9"}
+                  onClick={() => {
+                    setMain("Manage");
+                    setNavOpen(false);
+                  }}
+                >
+                  <RiMenuAddFill size={"1.3rem"} />
+                  <Text fontSize={"1.1rem"}>Manage</Text>
+                </HStack>
+                <HStack
+                  p={"1rem"}
+                  bg={main === "Profile" ? "#B37F37" : "white"}
+                  color={main === "Profile" ? "white" : "black"}
+                  cursor={"pointer"}
+                  borderBottom={"1px solid #dbd9d9"}
+                  onClick={() => {
+                    setMain("Profile");
+                    setNavOpen(false);
+                  }}
+                >
+                  <IoMdPerson size={"1.3rem"} />
+                  <Text fontSize={"1.1rem"}>Profile</Text>
+                </HStack>
+                <HStack
+                  p={"1rem"}
+                  bg={main === "Sales" ? "#B37F37" : "white"}
+                  color={main === "Sales" ? "white" : "black"}
+                  cursor={"pointer"}
+                  borderBottom={"1px solid #dbd9d9"}
+                  onClick={() => {
+                    setMain("Sales");
+                    setNavOpen(false);
+                  }}
+                >
+                  <LuBadgeDollarSign size={"1.3rem"} />
+                  <Text fontSize={"1.1rem"}>Sales</Text>
+                </HStack>
+                <HStack
+                  p={"1rem"}
+                  bg={main === "Help" ? "#B37F37" : "white"}
+                  color={main === "Help" ? "white" : "black"}
+                  cursor={"pointer"}
+                  borderBottom={"1px solid #dbd9d9"}
+                  onClick={() => {
+                    setMain("Help");
+                    setNavOpen(false);
+                  }}
+                >
+                  <IoMdHelpCircle size={"1.3rem"} />
+                  <Text fontSize={"1.1rem"}>Help</Text>
+                </HStack>
+              </Stack>
+            </Drawer.Body>
+            <Drawer.Footer>
+              <Button
+                bg={"white"}
+                color={"black"}
+                w={"100%"}
+                fontSize={"1rem"}
+                p={"1.5rem 0"}
+                borderTop={"1px solid #dbd9d9"}
+                onClick={() => handleSignOut()}
+              >
+                <HStack h={"100%"} alignItems={"center"}>
+                  <CiLogout />
+                  Sign Out
+                </HStack>
+              </Button>
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
       <Box
         w={"100vw"}
         h={"100vh"}
@@ -292,8 +435,10 @@ const FarmerHomePage = ({ children }: Props) => {
         <Stack
           border={"1px solid black"}
           borderRadius={".8rem"}
-          w={"40%"}
-          p={"2rem 2rem"}
+          w={{ base: "92%", md: "60%", lg: "40%" }}
+          maxH={"85vh"}
+          overflowY={"auto"}
+          p={{ base: "1.5rem 1.25rem", md: "2rem 2rem" }}
           bg={"white"}
           pos={"relative"}
           mt={"3rem"}

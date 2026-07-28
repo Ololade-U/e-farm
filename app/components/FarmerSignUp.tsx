@@ -91,11 +91,17 @@ const FarmerSignUp = () => {
   };
   return (
     <>
-      <HStack h={"100vh"} gap={0} overflowX={"hidden"}>
+      <HStack
+        h={{ base: "auto", md: "100vh" }}
+        flexDirection={{ base: "column", md: "row" }}
+        gap={0}
+        overflowX={"hidden"}
+      >
         <Box
-          h={"100%"}
+          h={{ base: "auto", md: "100%" }}
+          w={{ base: "100%", md: "50%" }}
+          p={{ base: "2.5rem 1.5rem", md: 0 }}
           textAlign={"left"}
-          w={"50%"}
           bg={"#09734E"}
           display={"flex"}
           flexDirection={"column"}
@@ -104,31 +110,34 @@ const FarmerSignUp = () => {
         >
           <Heading
             mb={"1rem"}
-            fontSize={"6xl"}
+            fontSize={{ base: "2xl", md: "6xl" }}
             lineHeight={"1"}
-            maxWidth={"10ch"}
+            maxWidth={{ base: "22ch", md: "10ch" }}
+            textAlign={{ base: "center", md: "left" }}
             color={"#FFFFFF"}
           >
             Create your Fresh Harvest Hub account and start selling.
           </Heading>
-          <Text pl={"1rem"} color={"#FFFFFF"}>
+          <Text pl={{ base: 0, md: "1rem" }} textAlign={{ base: "center", md: "left" }} color={"#FFFFFF"}>
             No credit card required &#x2022; affordable monthly plan
           </Text>
         </Box>
         <Box
           bg={"#f2f2f2"}
-          h={"100%"}
-          w={"50%"}
+          h={{ base: "auto", md: "100%" }}
+          w={{ base: "100%", md: "50%" }}
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
           overflowX={"auto"}
+          p={{ base: "2rem 1rem", md: 0 }}
         >
           <Stack
             border={"1px solid black"}
             borderRadius={".8rem"}
-            w={"70%"}
-            p={"2rem 2rem"}
+            w={{ base: "100%", md: "70%" }}
+            maxW={{ base: "26rem", md: "none" }}
+            p={{ base: "1.5rem 1.25rem", md: "2rem 2rem" }}
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               <Fieldset.Root gap={".5rem"} size="sm" maxW="md">
@@ -250,12 +259,14 @@ const FarmerSignUp = () => {
       </HStack>
       <Box
         display={success ? "flex" : "none"}
-        w={"40vw"}
-        h={"50vh"}
-        pos={"absolute"}
-        top={"25%"}
-        left={"35%"}
-        zIndex={"1000"}
+        w={{ base: "85%", md: "40vw" }}
+        h={{ base: "auto", md: "50vh" }}
+        p={{ base: "2.5rem 1.5rem", md: 0 }}
+        pos={"fixed"}
+        top={"50%"}
+        left={"50%"}
+        transform={"translate(-50%, -50%)"}
+        zIndex={"9999"}
         flexDirection={"column"}
         alignItems={"center"}
         gap={"2rem"}

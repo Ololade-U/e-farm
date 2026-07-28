@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Red_Hat_Display, Style_Script } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./components/provider/provider";
-import MobileBlocker from "./components/MobileBlocker";
 
 const red = Red_Hat_Display({
   variable: "--font-red-hat-display",
@@ -24,8 +23,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -36,9 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${red.className}`}>
-        <AuthProvider>
-          <MobileBlocker>{children}</MobileBlocker>
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
